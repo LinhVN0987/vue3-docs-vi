@@ -5,6 +5,7 @@ import {
   type HeadConfig,
   type Plugin
 } from 'vitepress'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import type { Config as ThemeConfig } from '@vue/theme'
 import llmstxt from 'vitepress-plugin-llms'
 import baseConfig from '@vue/theme/config'
@@ -794,6 +795,8 @@ export default defineConfigWithTheme<ThemeConfig>({
       stringify: true
     },
     plugins: [
+      // Vue DevTools (v7, Vite 5 compatible)
+      VueDevTools() as Plugin,
       llmstxt({
         ignoreFiles: [
           'about/team/**/*',

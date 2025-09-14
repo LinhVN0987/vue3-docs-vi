@@ -4,7 +4,7 @@
   Watch an interactive video lesson on Scrimba
 </ScrimbaLink>
 
-> This page assumes you've already read the overview on [Using Vue with TypeScript](./overview).
+> Trang này giả định bạn đã đọc phần tổng quan [Using Vue with TypeScript](./overview).
 
 ## Typing Component Props {#typing-component-props}
 

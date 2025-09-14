@@ -20,7 +20,7 @@ if (typeof window !== 'undefined') {
 
 # Component Events {#component-events}
 
-> This page assumes you've already read the [Components Basics](/guide/essentials/component-basics). Read that first if you are new to components.
+> Trang này giả định bạn đã đọc [Components Basics](/guide/essentials/component-basics). Nếu bạn mới với components, hãy đọc phần đó trước.
 
 <div class="options-api">
   <VueSchoolLink href="https://vueschool.io/lessons/defining-custom-events-emits" title="Free Vue.js Lesson on Defining Custom Events"/>
@@ -28,7 +28,7 @@ if (typeof window !== 'undefined') {
 
 ## Emitting and Listening to Events {#emitting-and-listening-to-events}
 
-A component can emit custom events directly in template expressions (e.g. in a `v-on` handler) using the built-in `$emit` method:
+Một component có thể emit custom event trực tiếp trong biểu thức template (ví dụ trong handler `v-on`) bằng method `$emit` built‑in:
 
 ```vue-html
 <!-- MyComponent -->
@@ -37,7 +37,7 @@ A component can emit custom events directly in template expressions (e.g. in a `
 
 <div class="options-api">
 
-The `$emit()` method is also available on the component instance as `this.$emit()`:
+Method `$emit()` cũng khả dụng trên component instance dưới dạng `this.$emit()`:
 
 ```js
 export default {
@@ -51,27 +51,27 @@ export default {
 
 </div>
 
-The parent can then listen to it using `v-on`:
+Parent có thể lắng nghe bằng `v-on`:
 
 ```vue-html
 <MyComponent @some-event="callback" />
 ```
 
-The `.once` modifier is also supported on component event listeners:
+Modifier `.once` cũng được hỗ trợ trên listener của component events:
 
 ```vue-html
 <MyComponent @some-event.once="callback" />
 ```
 
-Like components and props, event names provide an automatic case transformation. Notice we emitted a camelCase event, but can listen for it using a kebab-cased listener in the parent. As with [props casing](/guide/components/props#prop-name-casing), we recommend using kebab-cased event listeners in templates.
+Tương tự component và props, tên event hỗ trợ chuyển đổi kiểu chữ tự động. Lưu ý ta emit event dạng camelCase nhưng có thể lắng nghe bằng listener dạng kebab‑case ở parent. Như [props casing](/guide/components/props#prop-name-casing), chúng tôi khuyến nghị dùng listener dạng kebab‑case trong template.
 
 :::tip
-Unlike native DOM events, component emitted events do **not** bubble. You can only listen to the events emitted by a direct child component. If there is a need to communicate between sibling or deeply nested components, use an external event bus or a [global state management solution](/guide/scaling-up/state-management).
+Khác với DOM event gốc, event do component emit **không** bubble. Bạn chỉ có thể lắng nghe các event do child component trực tiếp emit. Nếu cần giao tiếp giữa sibling hoặc component lồng sâu, hãy dùng event bus bên ngoài hoặc [giải pháp quản lý state toàn cục](/guide/scaling-up/state-management).
 :::
 
 ## Event Arguments {#event-arguments}
 
-It's sometimes useful to emit a specific value with an event. For example, we may want the `<BlogPost>` component to be in charge of how much to enlarge the text by. In those cases, we can pass extra arguments to `$emit` to provide this value:
+Đôi khi hữu ích khi emit một giá trị cụ thể cùng event. Ví dụ, ta muốn component `<BlogPost>` quyết định mức độ phóng to text. Khi đó, ta có thể truyền thêm đối số cho `$emit` để cung cấp giá trị này:
 
 ```vue-html
 <button @click="$emit('increaseBy', 1)">
@@ -79,19 +79,19 @@ It's sometimes useful to emit a specific value with an event. For example, we ma
 </button>
 ```
 
-Then, when we listen to the event in the parent, we can use an inline arrow function as the listener, which allows us to access the event argument:
+Sau đó, khi lắng nghe event ở parent, ta có thể dùng inline arrow function làm listener để truy cập đối số event:
 
 ```vue-html
 <MyButton @increase-by="(n) => count += n" />
 ```
 
-Or, if the event handler is a method:
+Hoặc nếu event handler là một method:
 
 ```vue-html
 <MyButton @increase-by="increaseCount" />
 ```
 
-Then the value will be passed as the first parameter of that method:
+Giá trị sẽ được truyền làm tham số đầu tiên của method đó:
 
 <div class="options-api">
 
@@ -115,12 +115,12 @@ function increaseCount(n) {
 </div>
 
 :::tip
-All extra arguments passed to `$emit()` after the event name will be forwarded to the listener. For example, with `$emit('foo', 1, 2, 3)` the listener function will receive three arguments.
+Mọi đối số bổ sung truyền cho `$emit()` sau tên event sẽ được chuyển tiếp đến listener. Ví dụ, với `$emit('foo', 1, 2, 3)` hàm listener sẽ nhận ba đối số.
 :::
 
 ## Declaring Emitted Events {#declaring-emitted-events}
 
-A component can explicitly declare the events it will emit using the <span class="composition-api">[`defineEmits()`](/api/sfc-script-setup#defineprops-defineemits) macro</span><span class="options-api">[`emits`](/api/options-state#emits) option</span>:
+Một component có thể khai báo rõ ràng các event mà nó sẽ emit bằng <span class="composition-api">macro [`defineEmits()`](/api/sfc-script-setup#defineprops-defineemits)</span><span class="options-api">tùy chọn [`emits`](/api/options-state#emits)</span>:
 
 <div class="composition-api">
 
@@ -130,7 +130,7 @@ defineEmits(['inFocus', 'submit'])
 </script>
 ```
 
-The `$emit` method that we used in the `<template>` isn't accessible within the `<script setup>` section of a component, but `defineEmits()` returns an equivalent function that we can use instead:
+Method `$emit` dùng trong `<template>` không thể truy cập trong phần `<script setup>` của component, nhưng `defineEmits()` trả về một hàm tương đương để dùng thay thế:
 
 ```vue
 <script setup>
@@ -142,9 +142,9 @@ function buttonClick() {
 </script>
 ```
 
-The `defineEmits()` macro **cannot** be used inside a function, it must be placed directly within `<script setup>`, as in the example above.
+Macro `defineEmits()` **không** thể dùng bên trong một hàm; nó phải được đặt trực tiếp trong `<script setup>`, như ví dụ trên.
 
-If you're using an explicit `setup` function instead of `<script setup>`, events should be declared using the [`emits`](/api/options-state#emits) option, and the `emit` function is exposed on the `setup()` context:
+Nếu bạn dùng hàm `setup` thay vì `<script setup>`, event nên được khai báo bằng tùy chọn [`emits`](/api/options-state#emits), và hàm `emit` được cung cấp qua context của `setup()`:
 
 ```js
 export default {
@@ -155,7 +155,7 @@ export default {
 }
 ```
 
-As with other properties of the `setup()` context, `emit` can safely be destructured:
+Giống các thuộc tính khác của context `setup()`, có thể destructure `emit` một cách an toàn:
 
 ```js
 export default {
@@ -177,7 +177,7 @@ export default {
 
 </div>
 
-The `emits` option and `defineEmits()` macro also support an object syntax. If using TypeScript you can type arguments, which allows us to perform runtime validation of the payload of the emitted events:
+Tùy chọn `emits` và macro `defineEmits()` cũng hỗ trợ object syntax. Nếu dùng TypeScript, bạn có thể định kiểu cho đối số, cho phép kiểm tra payload của event emit ở runtime:
 
 <div class="composition-api">
 
@@ -192,7 +192,7 @@ const emit = defineEmits({
 </script>
 ```
 
-If you are using TypeScript with `<script setup>`, it's also possible to declare emitted events using pure type annotations:
+Nếu bạn dùng TypeScript với `<script setup>`, bạn cũng có thể khai báo emitted events chỉ với type annotation:
 
 ```vue
 <script setup lang="ts">
@@ -203,7 +203,7 @@ const emit = defineEmits<{
 </script>
 ```
 
-More details: [Typing Component Emits](/guide/typescript/composition-api#typing-component-emits) <sup class="vt-badge ts" />
+Chi tiết: [Typing Component Emits](/guide/typescript/composition-api#typing-component-emits) <sup class="vt-badge ts" />
 
 </div>
 <div class="options-api">

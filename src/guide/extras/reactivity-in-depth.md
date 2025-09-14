@@ -8,15 +8,15 @@ import SpreadSheet from './demos/SpreadSheet.vue'
 
 # Reactivity in Depth {#reactivity-in-depth}
 
-One of Vue’s most distinctive features is the unobtrusive reactivity system. Component state consists of reactive JavaScript objects. When you modify them, the view updates. It makes state management simple and intuitive, but it’s also important to understand how it works to avoid some common gotchas. In this section, we are going to dig into some of the lower-level details of Vue’s reactivity system.
+Một trong những đặc trưng nổi bật của Vue là hệ thống reactivity tinh gọn. State của component là các object JavaScript reactive. Khi bạn sửa chúng, view được cập nhật. Điều này khiến quản lý state đơn giản và trực quan, nhưng cũng quan trọng để hiểu cách hoạt động nhằm tránh một số lỗi thường gặp. Phần này đi sâu vào chi tiết tầng thấp của hệ thống reactivity của Vue.
 
 ## What is Reactivity? {#what-is-reactivity}
 
-This term comes up in programming quite a bit these days, but what do people mean when they say it? Reactivity is a programming paradigm that allows us to adjust to changes in a declarative manner. The canonical example that people usually show, because it’s a great one, is an Excel spreadsheet:
+Thuật ngữ này xuất hiện khá nhiều gần đây, nhưng ý nghĩa là gì? Reactivity là một mô hình lập trình cho phép ta phản ứng với thay đổi một cách khai báo. Ví dụ kinh điển là bảng tính Excel:
 
 <SpreadSheet />
 
-Here cell A2 is defined via a formula of `= A0 + A1` (you can click on A2 to view or edit the formula), so the spreadsheet gives us 3. No surprises there. But if you update A0 or A1, you'll notice that A2 automagically updates too.
+Ô A2 được định nghĩa bằng công thức `= A0 + A1` (bạn có thể nhấp vào A2 để xem/sửa), nên bảng cho ra 3. Nhưng nếu bạn cập nhật A0 hoặc A1, A2 cũng tự động cập nhật theo.
 
 JavaScript doesn’t usually work like this. If we were to write something comparable in JavaScript:
 
@@ -33,7 +33,7 @@ console.log(A2) // Still 3
 
 When we mutate `A0`, `A2` does not change automatically.
 
-So how would we do this in JavaScript? First, in order to re-run the code that updates `A2`, let's wrap it in a function:
+Vậy làm sao trong JavaScript? Đầu tiên, để chạy lại đoạn cập nhật `A2`, hãy bọc nó trong một hàm:
 
 ```js
 let A2
@@ -43,19 +43,19 @@ function update() {
 }
 ```
 
-Then, we need to define a few terms:
+Tiếp theo, ta định nghĩa vài thuật ngữ:
 
 - The `update()` function produces a **side effect**, or **effect** for short, because it modifies the state of the program.
 
 - `A0` and `A1` are considered **dependencies** of the effect, as their values are used to perform the effect. The effect is said to be a **subscriber** to its dependencies.
 
-What we need is a magic function that can invoke `update()` (the **effect**) whenever `A0` or `A1` (the **dependencies**) change:
+Ta cần một hàm “ma thuật” gọi `update()` ( **effect** ) bất cứ khi nào `A0` hoặc `A1` ( **dependencies** ) thay đổi:
 
 ```js
 whenDepsChange(update)
 ```
 
-This `whenDepsChange()` function has the following tasks:
+Hàm `whenDepsChange()` có nhiệm vụ:
 
 1. Track when a variable is read. E.g. when evaluating the expression `A0 + A1`, both `A0` and `A1` are read.
 
@@ -65,7 +65,7 @@ This `whenDepsChange()` function has the following tasks:
 
 ## How Reactivity Works in Vue {#how-reactivity-works-in-vue}
 
-We can't really track the reading and writing of local variables like in the example. There's just no mechanism for doing that in vanilla JavaScript. What we **can** do though, is intercept the reading and writing of **object properties**.
+Chúng ta không thể theo dõi đọc/ghi biến cục bộ như ví dụ — JavaScript thuần không có cơ chế đó. Nhưng ta **có thể** chặn việc đọc/ghi **thuộc tính của object**.
 
 There are two ways of intercepting property access in JavaScript: [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description) / [setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set#description) and [Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Vue 2 used getter / setters exclusively due to browser support limitations. In Vue 3, Proxies are used for reactive objects and getter / setters are used for refs. Here's some pseudo-code that illustrates how they work:
 
@@ -99,10 +99,10 @@ function ref(value) {
 ```
 
 :::tip
-Code snippets here and below are meant to explain the core concepts in the simplest form possible, so many details are omitted, and edge cases ignored.
+Các đoạn code ở đây nhằm giải thích khái niệm cốt lõi đơn giản nhất nên lược bỏ nhiều chi tiết và không xét edge case.
 :::
 
-This explains a few [limitations of reactive objects](/guide/essentials/reactivity-fundamentals#limitations-of-reactive) that we have discussed in the fundamentals section:
+Điều này giải thích một vài [giới hạn của reactive object](/guide/essentials/reactivity-fundamentals#limitations-of-reactive) đã bàn ở phần cơ bản:
 
 - When you assign or destructure a reactive object's property to a local variable, accessing or assigning to that variable is non-reactive because it no longer triggers the get / set proxy traps on the source object. Note this "disconnect" only affects the variable binding - if the variable points to a non-primitive value such as an object, mutating the object would still be reactive.
 

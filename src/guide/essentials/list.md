@@ -10,7 +10,7 @@
 
 ## `v-for` {#v-for}
 
-We can use the `v-for` directive to render a list of items based on an array. The `v-for` directive requires a special syntax in the form of `item in items`, where `items` is the source data array and `item` is an **alias** for the array element being iterated on:
+Chúng ta có thể dùng directive `v-for` để render một danh sách item dựa trên một mảng. Directive `v-for` yêu cầu cú pháp đặc biệt dạng `item in items`, trong đó `items` là mảng dữ liệu nguồn và `item` là **alias** cho phần tử đang được lặp:
 
 <div class="composition-api">
 
@@ -38,7 +38,7 @@ data() {
 </li>
 ```
 
-Inside the `v-for` scope, template expressions have access to all parent scope properties. In addition, `v-for` also supports an optional second alias for the index of the current item:
+Bên trong phạm vi của `v-for`, biểu thức template có thể truy cập mọi thuộc tính của phạm vi cha. Ngoài ra, `v-for` còn hỗ trợ alias thứ hai (tùy chọn) cho chỉ số của item hiện tại:
 
 <div class="composition-api">
 
@@ -88,7 +88,7 @@ const items = [{ message: 'Foo' }, { message: 'Bar' }]
 
 </div>
 
-The variable scoping of `v-for` is similar to the following JavaScript:
+Phạm vi biến của `v-for` tương tự đoạn JavaScript sau:
 
 ```js
 const parentMessage = 'Parent'
@@ -103,7 +103,7 @@ items.forEach((item, index) => {
 })
 ```
 
-Notice how the `v-for` value matches the function signature of the `forEach` callback. In fact, you can use destructuring on the `v-for` item alias similar to destructuring function arguments:
+Lưu ý giá trị của `v-for` khớp với chữ ký hàm của callback `forEach`. Thực tế, bạn có thể dùng destructuring trên alias của item trong `v-for` tương tự destructuring tham số hàm:
 
 ```vue-html
 <li v-for="{ message } in items">
@@ -116,7 +116,7 @@ Notice how the `v-for` value matches the function signature of the `forEach` cal
 </li>
 ```
 
-For nested `v-for`, scoping also works similar to nested functions. Each `v-for` scope has access to parent scopes:
+Với `v-for` lồng nhau, phạm vi cũng hoạt động tương tự các hàm lồng nhau. Mỗi phạm vi `v-for` có thể truy cập các phạm vi cha:
 
 ```vue-html
 <li v-for="item in items">

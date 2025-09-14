@@ -4,15 +4,15 @@ outline: deep
 
 # Render Functions & JSX {#render-functions-jsx}
 
-Vue recommends using templates to build applications in the vast majority of cases. However, there are situations where we need the full programmatic power of JavaScript. That's where we can use the **render function**.
+Vue khuyến nghị dùng template trong đa số trường hợp. Tuy nhiên, có tình huống cần toàn bộ sức mạnh lập trình của JavaScript — đó là lúc dùng **render function**.
 
-> If you are new to the concept of virtual DOM and render functions, make sure to read the [Rendering Mechanism](/guide/extras/rendering-mechanism) chapter first.
+> Nếu bạn mới với khái niệm virtual DOM và render function, hãy đọc trước [Rendering Mechanism](/guide/extras/rendering-mechanism).
 
 ## Basic Usage {#basic-usage}
 
 ### Creating Vnodes {#creating-vnodes}
 
-Vue provides an `h()` function for creating vnodes:
+Vue cung cấp hàm `h()` để tạo vnode:
 
 ```js
 import { h } from 'vue'
@@ -26,9 +26,9 @@ const vnode = h(
 )
 ```
 
-`h()` is short for **hyperscript** - which means "JavaScript that produces HTML (hypertext markup language)". This name is inherited from conventions shared by many virtual DOM implementations. A more descriptive name could be `createVNode()`, but a shorter name helps when you have to call this function many times in a render function.
+`h()` là viết tắt của **hyperscript** — “JavaScript tạo ra HTML”. Tên này theo quy ước chung của nhiều hiện thực virtual DOM. Tên mô tả hơn có thể là `createVNode()`, nhưng tên ngắn hữu ích khi gọi nhiều lần trong render function.
 
-The `h()` function is designed to be very flexible:
+Hàm `h()` được thiết kế rất linh hoạt:
 
 ```js
 // all arguments except the type are optional
@@ -61,7 +61,7 @@ h('div', [h('span', 'hello')])
 h('div', ['hello', h('span', 'hello')])
 ```
 
-The resulting vnode has the following shape:
+Vnode tạo ra có dạng:
 
 ```js
 const vnode = h('div', { id: 'foo' }, [])
@@ -73,14 +73,14 @@ vnode.key // null
 ```
 
 :::warning Note
-The full `VNode` interface contains many other internal properties, but it is strongly recommended to avoid relying on any properties other than the ones listed here. This avoids unintended breakage in case the internal properties are changed.
+`VNode` đầy đủ có nhiều thuộc tính nội bộ khác, nhưng khuyến nghị không dựa vào thuộc tính ngoài những cái liệt kê ở đây để tránh hỏng khi thuộc tính nội bộ thay đổi.
 :::
 
 ### Declaring Render Functions {#declaring-render-functions}
 
 <div class="composition-api">
 
-When using templates with Composition API, the return value of the `setup()` hook is used to expose data to the template. When using render functions, however, we can directly return the render function instead:
+Khi dùng template với Composition API, giá trị trả về của `setup()` dùng để expose dữ liệu cho template. Với render function, ta trả về chính render function:
 
 ```js
 import { ref, h } from 'vue'
@@ -98,9 +98,9 @@ export default {
 }
 ```
 
-The render function is declared inside `setup()` so it naturally has access to the props and any reactive state declared in the same scope.
+Render function được khai báo trong `setup()` nên tự nhiên truy cập được props và state reactive cùng scope.
 
-In addition to returning a single vnode, you can also return strings or arrays:
+Ngoài trả về một vnode, bạn có thể trả về chuỗi hoặc mảng:
 
 ```js
 export default {
@@ -126,13 +126,13 @@ export default {
 ```
 
 :::tip
-Make sure to return a function instead of directly returning values! The `setup()` function is called only once per component, while the returned render function will be called multiple times.
+Hãy trả về một hàm chứ không trả về trực tiếp giá trị! `setup()` chỉ được gọi một lần mỗi component, trong khi render function được gọi nhiều lần.
 :::
 
 </div>
 <div class="options-api">
 
-We can declare render functions using the `render` option:
+Ta có thể khai báo render function bằng tùy chọn `render`:
 
 ```js
 import { h } from 'vue'
@@ -149,9 +149,9 @@ export default {
 }
 ```
 
-The `render()` function has access to the component instance via `this`.
+Hàm `render()` có thể truy cập instance component qua `this`.
 
-In addition to returning a single vnode, you can also return strings or arrays:
+Ngoài trả về một vnode, bạn cũng có thể trả về chuỗi hoặc mảng:
 
 ```js
 export default {
@@ -178,7 +178,7 @@ export default {
 
 </div>
 
-If a render function component doesn't need any instance state, they can also be declared directly as a function for brevity:
+Nếu một component render function không cần state instance, có thể khai báo trực tiếp dưới dạng hàm cho gọn:
 
 ```js
 function Hello() {
@@ -186,11 +186,10 @@ function Hello() {
 }
 ```
 
-That's right, this is a valid Vue component! See [Functional Components](#functional-components) for more details on this syntax.
-
+Đúng vậy, đây là một Vue component hợp lệ! Xem [Functional Components](#functional-components) để biết chi tiết về cú pháp này.
 ### Vnodes Must Be Unique {#vnodes-must-be-unique}
 
-All vnodes in the component tree must be unique. That means the following render function is invalid:
+Tất cả vnode trong cây component phải duy nhất. Nghĩa là render function sau là không hợp lệ:
 
 ```js
 function render() {
@@ -203,7 +202,7 @@ function render() {
 }
 ```
 
-If you really want to duplicate the same element/component many times, you can do so with a factory function. For example, the following render function is a perfectly valid way of rendering 20 identical paragraphs:
+Nếu bạn thực sự muốn lặp cùng phần tử/component nhiều lần, hãy dùng một hàm factory. Ví dụ, render function sau hợp lệ để render 20 đoạn văn giống hệt:
 
 ```js
 function render() {
@@ -218,32 +217,32 @@ function render() {
 
 ## JSX / TSX {#jsx-tsx}
 
-[JSX](https://facebook.github.io/jsx/) is an XML-like extension to JavaScript that allows us to write code like this:
+[JSX](https://facebook.github.io/jsx/) là phần mở rộng giống XML cho JavaScript cho phép viết code như sau:
 
 ```jsx
 const vnode = <div>hello</div>
 ```
 
-Inside JSX expressions, use curly braces to embed dynamic values:
+Bên trong biểu thức JSX, dùng ngoặc nhọn để chèn giá trị động:
 
 ```jsx
 const vnode = <div id={dynamicId}>hello, {userName}</div>
 ```
 
-`create-vue` and Vue CLI both have options for scaffolding projects with pre-configured JSX support. If you are configuring JSX manually, please refer to the documentation of [`@vue/babel-plugin-jsx`](https://github.com/vuejs/jsx-next) for details.
+`create-vue` và Vue CLI đều có tuỳ chọn scaffold dự án với hỗ trợ JSX cấu hình sẵn. Nếu cấu hình JSX thủ công, tham khảo tài liệu [`@vue/babel-plugin-jsx`](https://github.com/vuejs/jsx-next).
 
-Although first introduced by React, JSX actually has no defined runtime semantics and can be compiled into various different outputs. If you have worked with JSX before, do note that **Vue JSX transform is different from React's JSX transform**, so you can't use React's JSX transform in Vue applications. Some notable differences from React JSX include:
+Mặc dù được giới thiệu bởi React, JSX thực chất không có ngữ nghĩa runtime xác định và có thể được biên dịch thành nhiều đầu ra khác nhau. Nếu bạn từng dùng JSX, lưu ý **JSX transform của Vue khác với React**, nên không thể dùng transform của React trong ứng dụng Vue. Một số khác biệt đáng chú ý so với React JSX:
 
-- You can use HTML attributes such as `class` and `for` as props - no need to use `className` or `htmlFor`.
-- Passing children to components (i.e. slots) [works differently](#passing-slots).
+- Có thể dùng thuộc tính HTML như `class` và `for` làm prop — không cần `className` hay `htmlFor`.
+- Truyền children cho component (tức slot) [hoạt động khác](#passing-slots).
 
-Vue's type definition also provides type inference for TSX usage. When using TSX, make sure to specify `"jsx": "preserve"` in `tsconfig.json` so that TypeScript leaves the JSX syntax intact for Vue JSX transform to process.
+Định nghĩa kiểu của Vue cũng cung cấp suy luận kiểu cho TSX. Khi dùng TSX, đảm bảo đặt `"jsx": "preserve"` trong `tsconfig.json` để TypeScript giữ nguyên cú pháp JSX cho Vue xử lý.
 
-### JSX Type Inference {#jsx-type-inference}
+### Suy luận kiểu JSX {#jsx-type-inference}
 
-Similar to the transform, Vue's JSX also needs different type definitions.
+Tương tự transform, JSX của Vue cũng cần định nghĩa kiểu khác.
 
-Starting in Vue 3.4, Vue no longer implicitly registers the global `JSX` namespace. To instruct TypeScript to use Vue's JSX type definitions, make sure to include the following in your `tsconfig.json`:
+Bắt đầu từ Vue 3.4, Vue không còn đăng ký ngầm namespace toàn cục `JSX`. Để TypeScript dùng định nghĩa kiểu JSX của Vue, thêm vào `tsconfig.json`:
 
 ```json
 {
@@ -255,13 +254,13 @@ Starting in Vue 3.4, Vue no longer implicitly registers the global `JSX` namespa
 }
 ```
 
-You can also opt-in per file by adding a `/* @jsxImportSource vue */` comment at the top of the file.
+Bạn cũng có thể bật theo từng file bằng cách thêm dòng `/* @jsxImportSource vue */` ở đầu file.
 
-If there is code that depends on the presence of the global `JSX` namespace,  you can retain the exact pre-3.4 global behavior by explicitly importing or referencing `vue/jsx` in your project, which registers the global `JSX` namespace.
+Nếu có code phụ thuộc vào namespace toàn cục `JSX`, bạn có thể giữ nguyên hành vi trước 3.4 bằng cách import hoặc reference `vue/jsx` trong dự án để đăng ký namespace `JSX` toàn cục.
 
 ## Render Function Recipes {#render-function-recipes}
 
-Below we will provide some common recipes for implementing template features as their equivalent render functions / JSX.
+Bên dưới là một số công thức phổ biến để hiện thực tính năng template bằng render function / JSX tương đương.
 
 ### `v-if` {#v-if}
 
@@ -357,7 +356,7 @@ h(
 
 ### `v-on` {#v-on}
 
-Props with names that start with `on` followed by an uppercase letter are treated as event listeners. For example, `onClick` is the equivalent of `@click` in templates.
+Prop có tên bắt đầu bằng `on` theo sau là chữ hoa sẽ được coi là listener sự kiện. Ví dụ, `onClick` tương đương `@click` trong template.
 
 ```js
 h(
@@ -383,7 +382,7 @@ h(
 
 #### Event Modifiers {#event-modifiers}
 
-For the `.passive`, `.capture`, and `.once` event modifiers, they can be concatenated after the event name using camelCase.
+Với các modifier `.passive`, `.capture`, và `.once`, bạn có thể nối sau tên sự kiện bằng camelCase.
 
 For example:
 
@@ -409,7 +408,7 @@ h('input', {
 />
 ```
 
-For other event and key modifiers, the [`withModifiers`](/api/render-function#withmodifiers) helper can be used:
+Với các event modifier và key modifier khác, có thể dùng helper [`withModifiers`](/api/render-function#withmodifiers):
 
 ```js
 import { withModifiers } from 'vue'
@@ -425,7 +424,7 @@ h('div', {
 
 ### Components {#components}
 
-To create a vnode for a component, the first argument passed to `h()` should be the component definition. This means when using render functions, it is unnecessary to register components - you can just use the imported components directly:
+Để tạo vnode cho component, tham số đầu tiên truyền cho `h()` phải là định nghĩa component. Nghĩa là khi dùng render function, không cần đăng ký component — bạn có thể dùng trực tiếp các component đã import:
 
 ```js
 import Foo from './Foo.vue'
@@ -447,9 +446,9 @@ function render() {
 }
 ```
 
-As we can see, `h` can work with components imported from any file format as long as it's a valid Vue component.
+Như bạn thấy, `h` hoạt động với component import từ bất kỳ định dạng file nào miễn là Vue component hợp lệ.
 
-Dynamic components are straightforward with render functions:
+Dynamic component rất trực quan với render function:
 
 ```js
 import Foo from './Foo.vue'
@@ -466,13 +465,13 @@ function render() {
 }
 ```
 
-If a component is registered by name and cannot be imported directly (for example, globally registered by a library), it can be programmatically resolved by using the [`resolveComponent()`](/api/render-function#resolvecomponent) helper.
+Nếu một component chỉ được đăng ký theo tên và không thể import trực tiếp (ví dụ đăng ký toàn cục bởi thư viện), có thể resolve bằng helper [`resolveComponent()`](/api/render-function#resolvecomponent).
 
 ### Rendering Slots {#rendering-slots}
 
 <div class="composition-api">
 
-In render functions, slots can be accessed from the `setup()` context. Each slot on the `slots` object is a **function that returns an array of vnodes**:
+Trong render function, slot có thể truy cập từ context `setup()`. Mỗi slot trên đối tượng `slots` là một **hàm trả về mảng vnode**:
 
 ```js
 export default {
@@ -496,7 +495,7 @@ export default {
 }
 ```
 
-JSX equivalent:
+Tương đương JSX:
 
 ```jsx
 // default

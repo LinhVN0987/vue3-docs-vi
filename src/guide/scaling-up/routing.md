@@ -2,11 +2,11 @@
 
 ## Client-Side vs. Server-Side Routing {#client-side-vs-server-side-routing}
 
-Routing on the server side means the server is sending a response based on the URL path that the user is visiting. When we click on a link in a traditional server-rendered web app, the browser receives an HTML response from the server and reloads the entire page with the new HTML.
+Routing phía server nghĩa là server gửi phản hồi dựa trên URL người dùng truy cập. Khi nhấp vào liên kết trong ứng dụng render từ server truyền thống, trình duyệt nhận HTML từ server và tải lại toàn bộ trang với HTML mới.
 
-In a [Single-Page Application](https://developer.mozilla.org/en-US/docs/Glossary/SPA) (SPA), however, the client-side JavaScript can intercept the navigation, dynamically fetch new data, and update the current page without full page reloads. This typically results in a more snappy user experience, especially for use cases that are more like actual "applications", where the user is expected to perform many interactions over a long period of time.
+Trong [Single‑Page Application](https://developer.mozilla.org/en-US/docs/Glossary/SPA) (SPA), JavaScript phía client có thể chặn điều hướng, tải dữ liệu mới động, và cập nhật trang hiện tại mà không cần reload toàn trang. Điều này thường mang lại trải nghiệm nhạy hơn, đặc biệt cho trường hợp giống “ứng dụng” thực thụ, nơi người dùng tương tác nhiều trong thời gian dài.
 
-In such SPAs, the "routing" is done on the client side, in the browser. A client-side router is responsible for managing the application's rendered view using browser APIs such as [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) or the [`hashchange` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event).
+Trong SPA, “routing” được thực hiện ở phía client, trong trình duyệt. Client‑side router chịu trách nhiệm quản lý view được render của ứng dụng bằng các API trình duyệt như [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) hoặc [`hashchange` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event).
 
 ## Official Router {#official-router}
 
@@ -17,13 +17,13 @@ In such SPAs, the "routing" is done on the client side, in the browser. A client
   </VueSchoolLink>
 </div>
 
-Vue is well-suited for building SPAs. For most SPAs, it's recommended to use the officially-supported [Vue Router library](https://github.com/vuejs/router). For more details, see Vue Router's [documentation](https://router.vuejs.org/).
+Vue phù hợp để xây SPA. Với đa số SPA, khuyến nghị dùng [Vue Router](https://github.com/vuejs/router) chính thức. Xem chi tiết tại [tài liệu Vue Router](https://router.vuejs.org/).
 
 ## Simple Routing from Scratch {#simple-routing-from-scratch}
 
-If you only need very simple routing and do not wish to involve a full-featured router library, you can do so with [Dynamic Components](/guide/essentials/component-basics#dynamic-components) and update the current component state by listening to browser [`hashchange` events](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) or using the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History).
+Nếu bạn chỉ cần routing rất đơn giản và không muốn dùng thư viện router đầy đủ, có thể kết hợp [Dynamic Components](/guide/essentials/component-basics#dynamic-components) và cập nhật state hiện tại bằng cách lắng nghe [`hashchange` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) của trình duyệt hoặc dùng [History API](https://developer.mozilla.org/en-US/docs/Web/API/History).
 
-Here's a bare-bone example:
+Ví dụ tối giản:
 
 <div class="composition-api">
 

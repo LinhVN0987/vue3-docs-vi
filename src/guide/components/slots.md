@@ -1,12 +1,12 @@
 # Slots {#slots}
 
-> This page assumes you've already read the [Components Basics](/guide/essentials/component-basics). Read that first if you are new to components.
+> Trang này giả định bạn đã đọc [Components Basics](/guide/essentials/component-basics). Nếu bạn mới với components, hãy đọc phần đó trước.
 
 <VueSchoolLink href="https://vueschool.io/lessons/vue-3-component-slots" title="Free Vue.js Slots Lesson"/>
 
 ## Slot Content and Outlet {#slot-content-and-outlet}
 
-We have learned that components can accept props, which can be JavaScript values of any type. But how about template content? In some cases, we may want to pass a template fragment to a child component, and let the child component render the fragment within its own template.
+Chúng ta đã biết component có thể nhận props, là các giá trị JavaScript thuộc bất kỳ kiểu nào. Vậy còn nội dung template thì sao? Một số trường hợp, ta muốn truyền một đoạn template vào child component và để child render đoạn đó trong template của chính nó.
 
 For example, we may have a `<FancyButton>` component that supports usage like this:
 
@@ -16,7 +16,7 @@ For example, we may have a `<FancyButton>` component that supports usage like th
 </FancyButton>
 ```
 
-The template of `<FancyButton>` looks like this:
+Template của `<FancyButton>` như sau:
 
 ```vue-html{2}
 <button class="fancy-btn">
@@ -24,13 +24,13 @@ The template of `<FancyButton>` looks like this:
 </button>
 ```
 
-The `<slot>` element is a **slot outlet** that indicates where the parent-provided **slot content** should be rendered.
+Phần tử `<slot>` là **slot outlet**, chỉ vị trí nơi **slot content** do parent cung cấp sẽ được render.
 
 ![slot diagram](./images/slots.png)
 
 <!-- https://www.figma.com/file/LjKTYVL97Ck6TEmBbstavX/slot -->
 
-And the final rendered DOM:
+DOM render cuối cùng:
 
 ```html
 <button class="fancy-btn">Click me!</button>
@@ -47,9 +47,9 @@ And the final rendered DOM:
 
 </div>
 
-With slots, the `<FancyButton>` is responsible for rendering the outer `<button>` (and its fancy styling), while the inner content is provided by the parent component.
+Với slots, `<FancyButton>` chịu trách nhiệm render `<button>` bên ngoài (và style của nó), còn nội dung bên trong do parent cung cấp.
 
-Another way to understand slots is by comparing them to JavaScript functions:
+Một cách khác để hiểu slot là so sánh với hàm JavaScript:
 
 ```js
 // parent component passing slot content
@@ -63,7 +63,7 @@ function FancyButton(slotContent) {
 }
 ```
 
-Slot content is not just limited to text. It can be any valid template content. For example, we can pass in multiple elements, or even other components:
+Slot content không chỉ giới hạn ở văn bản. Nó có thể là bất kỳ nội dung template hợp lệ nào. Ví dụ, ta có thể truyền nhiều phần tử, hoặc thậm chí component khác:
 
 ```vue-html
 <FancyButton>
@@ -83,28 +83,28 @@ Slot content is not just limited to text. It can be any valid template content. 
 
 </div>
 
-By using slots, our `<FancyButton>` is more flexible and reusable. We can now use it in different places with different inner content, but all with the same fancy styling.
+Bằng cách dùng slots, `<FancyButton>` trở nên linh hoạt và tái sử dụng hơn. Ta có thể dùng nó ở nhiều nơi với nội dung bên trong khác nhau, nhưng vẫn giữ cùng style.
 
-Vue components' slot mechanism is inspired by the [native Web Component `<slot>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot), but with additional capabilities that we will see later.
+Cơ chế slot của Vue được lấy cảm hứng từ [phần tử `<slot>` của Web Components](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot), nhưng có thêm các khả năng sẽ thấy ở phần sau.
 
 ## Render Scope {#render-scope}
 
-Slot content has access to the data scope of the parent component, because it is defined in the parent. For example:
+Slot content có quyền truy cập phạm vi dữ liệu của parent component, vì nó được định nghĩa ở parent. Ví dụ:
 
 ```vue-html
 <span>{{ message }}</span>
 <FancyButton>{{ message }}</FancyButton>
 ```
 
-Here both <span v-pre>`{{ message }}`</span> interpolations will render the same content.
+Ở đây cả hai interpolation <span v-pre>`{{ message }}`</span> sẽ render cùng nội dung.
 
-Slot content does **not** have access to the child component's data. Expressions in Vue templates can only access the scope it is defined in, consistent with JavaScript's lexical scoping. In other words:
+Slot content **không** truy cập được dữ liệu của child component. Biểu thức trong template Vue chỉ có thể truy cập phạm vi nơi nó được định nghĩa, phù hợp với nguyên tắc lexical scoping của JavaScript. Nói cách khác:
 
-> Expressions in the parent template only have access to the parent scope; expressions in the child template only have access to the child scope.
+> Biểu thức trong template của parent chỉ truy cập phạm vi của parent; biểu thức trong template của child chỉ truy cập phạm vi của child.
 
 ## Fallback Content {#fallback-content}
 
-There are cases when it's useful to specify fallback (i.e. default) content for a slot, to be rendered only when no content is provided. For example, in a `<SubmitButton>` component:
+Một số trường hợp hữu ích khi chỉ định nội dung fallback (mặc định) cho slot, chỉ được render khi không có nội dung nào được cung cấp. Ví dụ, trong component `<SubmitButton>`:
 
 ```vue-html
 <button type="submit">
@@ -112,7 +112,7 @@ There are cases when it's useful to specify fallback (i.e. default) content for 
 </button>
 ```
 
-We might want the text "Submit" to be rendered inside the `<button>` if the parent didn't provide any slot content. To make "Submit" the fallback content, we can place it in between the `<slot>` tags:
+Ta có thể muốn chữ "Submit" được render bên trong `<button>` nếu parent không cung cấp slot content. Để đặt "Submit" làm nội dung fallback, hãy đặt nó giữa các thẻ `<slot>`:
 
 ```vue-html{3}
 <button type="submit">
@@ -122,25 +122,25 @@ We might want the text "Submit" to be rendered inside the `<button>` if the pare
 </button>
 ```
 
-Now when we use `<SubmitButton>` in a parent component, providing no content for the slot:
+Bây giờ khi dùng `<SubmitButton>` ở parent component mà không cung cấp nội dung cho slot:
 
 ```vue-html
 <SubmitButton />
 ```
 
-This will render the fallback content, "Submit":
+Sẽ render nội dung fallback, "Submit":
 
 ```html
 <button type="submit">Submit</button>
 ```
 
-But if we provide content:
+Nhưng nếu ta cung cấp nội dung:
 
 ```vue-html
 <SubmitButton>Save</SubmitButton>
 ```
 
-Then the provided content will be rendered instead:
+Khi đó nội dung được cung cấp sẽ được render thay thế:
 
 ```html
 <button type="submit">Save</button>
@@ -159,7 +159,7 @@ Then the provided content will be rendered instead:
 
 ## Named Slots {#named-slots}
 
-There are times when it's useful to have multiple slot outlets in a single component. For example, in a `<BaseLayout>` component with the following template:
+Đôi khi cần có nhiều slot outlet trong một component. Ví dụ, trong component `<BaseLayout>` với template sau:
 
 ```vue-html
 <div class="container">
@@ -175,7 +175,7 @@ There are times when it's useful to have multiple slot outlets in a single compo
 </div>
 ```
 
-For these cases, the `<slot>` element has a special attribute, `name`, which can be used to assign a unique ID to different slots so you can determine where content should be rendered:
+Trong các trường hợp này, phần tử `<slot>` có attribute đặc biệt `name`, dùng để gán định danh riêng cho các slot khác nhau nhằm xác định nơi nội dung sẽ được render:
 
 ```vue-html
 <div class="container">
@@ -191,11 +191,11 @@ For these cases, the `<slot>` element has a special attribute, `name`, which can
 </div>
 ```
 
-A `<slot>` outlet without `name` implicitly has the name "default".
+`<slot>` không có `name` sẽ ngầm hiểu tên là "default".
 
-In a parent component using `<BaseLayout>`, we need a way to pass multiple slot content fragments, each targeting a different slot outlet. This is where **named slots** come in.
+Trong parent component dùng `<BaseLayout>`, ta cần cách truyền nhiều mảnh slot content, mỗi mảnh nhắm tới một slot outlet khác nhau. Đây là lúc **named slots** phát huy tác dụng.
 
-To pass a named slot, we need to use a `<template>` element with the `v-slot` directive, and then pass the name of the slot as an argument to `v-slot`:
+Để truyền named slot, ta dùng phần tử `<template>` với directive `v-slot`, và truyền tên của slot làm đối số cho `v-slot`:
 
 ```vue-html
 <BaseLayout>
@@ -205,13 +205,13 @@ To pass a named slot, we need to use a `<template>` element with the `v-slot` di
 </BaseLayout>
 ```
 
-`v-slot` has a dedicated shorthand `#`, so `<template v-slot:header>` can be shortened to just `<template #header>`. Think of it as "render this template fragment in the child component's 'header' slot".
+`v-slot` có shorthand `#`, nên `<template v-slot:header>` có thể viết ngắn thành `<template #header>`. Hãy hiểu như: "render đoạn template này vào slot 'header' của child component".
 
 ![named slots diagram](./images/named-slots.png)
 
 <!-- https://www.figma.com/file/2BhP8gVZevttBu9oUmUUyz/named-slot -->
 
-Here's the code passing content for all three slots to `<BaseLayout>` using the shorthand syntax:
+Đây là đoạn code truyền nội dung cho cả ba slot của `<BaseLayout>` bằng cú pháp viết tắt:
 
 ```vue-html
 <BaseLayout>

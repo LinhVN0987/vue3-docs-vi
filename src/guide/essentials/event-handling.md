@@ -10,17 +10,17 @@
 
 ## Listening to Events {#listening-to-events}
 
-We can use the `v-on` directive, which we typically shorten to the `@` symbol, to listen to DOM events and run some JavaScript when they're triggered. The usage would be `v-on:click="handler"` or with the shortcut, `@click="handler"`.
+Chúng ta có thể dùng directive `v-on`, thường viết tắt bằng ký hiệu `@`, để lắng nghe DOM event và chạy một đoạn JavaScript khi chúng được kích hoạt. Cách dùng là `v-on:click="handler"` hoặc viết tắt `@click="handler"`.
 
-The handler value can be one of the following:
+Giá trị handler có thể là một trong các dạng sau:
 
-1. **Inline handlers:** Inline JavaScript to be executed when the event is triggered (similar to the native `onclick` attribute).
+1. **Inline handlers:** JavaScript viết inline để thực thi khi event được kích hoạt (tương tự attribute `onclick` gốc).
 
-2. **Method handlers:** A property name or path that points to a method defined on the component.
+2. **Method handlers:** Tên thuộc tính hoặc đường dẫn trỏ đến một method được định nghĩa trên component.
 
 ## Inline Handlers {#inline-handlers}
 
-Inline handlers are typically used in simple cases, for example:
+Inline handler thường dùng cho các trường hợp đơn giản, ví dụ:
 
 <div class="composition-api">
 
@@ -59,7 +59,7 @@ data() {
 
 ## Method Handlers {#method-handlers}
 
-The logic for many event handlers will be more complex though, and likely isn't feasible with inline handlers. That's why `v-on` can also accept the name or path of a component method you'd like to call.
+Logic của nhiều event handler sẽ phức tạp hơn và khó phù hợp với inline handler. Vì vậy, `v-on` cũng có thể nhận tên hoặc đường dẫn tới một method của component mà bạn muốn gọi.
 
 For example:
 
@@ -116,7 +116,7 @@ methods: {
 
 </div>
 
-A method handler automatically receives the native DOM Event object that triggers it - in the example above, we are able to access the element dispatching the event via `event.target`.
+Method handler tự động nhận đối tượng DOM Event gốc đã kích hoạt nó — trong ví dụ trên, chúng ta có thể truy cập phần tử phát ra event qua `event.target`.
 
 <div class="composition-api">
 

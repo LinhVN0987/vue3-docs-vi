@@ -10,24 +10,24 @@ import BetweenComponents from './transition-demos/BetweenComponents.vue'
 
 # Transition {#transition}
 
-Vue offers two built-in components that can help work with transitions and animations in response to changing state:
+Vue cung cấp hai built‑in component giúp làm việc với transition và animation khi state thay đổi:
 
-- `<Transition>` for applying animations when an element or component is entering and leaving the DOM. This is covered on this page.
+- `<Transition>` để áp dụng animation khi một phần tử hoặc component vào/ra DOM. Nội dung này trình bày trên trang này.
 
-- `<TransitionGroup>` for applying animations when an element or component is inserted into, removed from, or moved within a `v-for` list. This is covered in [the next chapter](/guide/built-ins/transition-group).
+- `<TransitionGroup>` để áp dụng animation khi phần tử hoặc component được chèn vào, gỡ ra, hoặc di chuyển trong danh sách `v-for`. Xem trong [chương tiếp theo](/guide/built-ins/transition-group).
 
-Aside from these two components, we can also apply animations in Vue using other techniques such as toggling CSS classes or state-driven animations via style bindings. These additional techniques are covered in the [Animation Techniques](/guide/extras/animation) chapter.
+Ngoài hai component này, ta cũng có thể áp dụng animation trong Vue bằng cách khác như bật/tắt CSS class hoặc animation điều khiển bởi state qua style binding. Các kỹ thuật bổ sung được trình bày trong phần [Animation Techniques](/guide/extras/animation).
 
 ## The `<Transition>` Component {#the-transition-component}
 
-`<Transition>` is a built-in component: this means it is available in any component's template without having to register it. It can be used to apply enter and leave animations on elements or components passed to it via its default slot. The enter or leave can be triggered by one of the following:
+`<Transition>` là built‑in component: nghĩa là nó khả dụng trong template của bất kỳ component nào mà không cần đăng ký. Nó dùng để áp dụng enter/leave animation cho phần tử hoặc component được truyền qua default slot. Enter/leave có thể được kích hoạt bởi:
 
 - Conditional rendering via `v-if`
 - Conditional display via `v-show`
 - Dynamic components toggling via the `<component>` special element
 - Changing the special `key` attribute
 
-This is an example of the most basic usage:
+Ví dụ cơ bản nhất:
 
 ```vue-html
 <button @click="show = !show">Toggle</button>
@@ -63,16 +63,16 @@ This is an example of the most basic usage:
 </div>
 
 :::tip
-`<Transition>` only supports a single element or component as its slot content. If the content is a component, the component must also have only one single root element.
+`<Transition>` chỉ hỗ trợ một phần tử hoặc một component duy nhất làm nội dung slot. Nếu là component, component đó cũng phải chỉ có một root element duy nhất.
 :::
 
-When an element in a `<Transition>` component is inserted or removed, this is what happens:
+Khi một phần tử trong `<Transition>` được chèn vào hoặc gỡ ra, sẽ xảy ra:
 
-1. Vue will automatically sniff whether the target element has CSS transitions or animations applied. If it does, a number of [CSS transition classes](#transition-classes) will be added / removed at appropriate timings.
+1. Vue tự động phát hiện phần tử đích có CSS transition/animation hay không. Nếu có, một số [CSS transition class](#transition-classes) sẽ được thêm/bớt vào thời điểm thích hợp.
 
-2. If there are listeners for [JavaScript hooks](#javascript-hooks), these hooks will be called at appropriate timings.
+2. Nếu có listener cho [JavaScript hooks](#javascript-hooks), các hook sẽ được gọi vào thời điểm thích hợp.
 
-3. If no CSS transitions / animations are detected and no JavaScript hooks are provided, the DOM operations for insertion and/or removal will be executed on the browser's next animation frame.
+3. Nếu không phát hiện CSS transition/animation và không có JavaScript hook, thao tác DOM chèn/gỡ sẽ được thực thi ở animation frame kế tiếp của trình duyệt.
 
 ## CSS-Based Transitions {#css-based-transitions}
 

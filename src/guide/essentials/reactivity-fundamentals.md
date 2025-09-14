@@ -5,14 +5,14 @@ outline: deep
 # Reactivity Fundamentals {#reactivity-fundamentals}
 
 :::tip API Preference
-This page and many other chapters later in the guide contain different content for the Options API and the Composition API. Your current preference is <span class="options-api">Options API</span><span class="composition-api">Composition API</span>. You can toggle between the API styles using the "API Preference" switches at the top of the left sidebar.
+Trang này và nhiều chương sau trong hướng dẫn có nội dung khác nhau cho Options API và Composition API. Tùy chọn hiện tại của bạn là <span class="options-api">Options API</span><span class="composition-api">Composition API</span>. Bạn có thể chuyển đổi giữa các phong cách API bằng công tắc "API Preference" ở đầu sidebar bên trái.
 :::
 
 <div class="options-api">
 
 ## Declaring Reactive State \* {#declaring-reactive-state}
 
-With the Options API, we use the `data` option to declare reactive state of a component. The option value should be a function that returns an object. Vue will call the function when creating a new component instance, and wrap the returned object in its reactivity system. Any top-level properties of this object are proxied on the component instance (`this` in methods and lifecycle hooks):
+Với Options API, chúng ta dùng tùy chọn `data` để khai báo reactive state của một component. Giá trị của tùy chọn nên là một hàm trả về một object. Vue sẽ gọi hàm đó khi tạo component instance mới và bọc object trả về trong hệ thống reactivity của nó. Bất kỳ thuộc tính top‑level nào của object này sẽ được proxy trên component instance (`this` trong methods và lifecycle hooks):
 
 ```js{2-6}
 export default {
@@ -35,15 +35,15 @@ export default {
 
 [Try it in the Playground](https://play.vuejs.org/#eNpFUNFqhDAQ/JXBpzsoHu2j3B2U/oYPpnGtoetGkrW2iP/eRFsPApthd2Zndilex7H8mqioimu0wY16r4W+Rx8ULXVmYsVSC9AaNafz/gcC6RTkHwHWT6IVnne85rI+1ZLr5YJmyG1qG7gIA3Yd2R/LhN77T8y9sz1mwuyYkXazcQI2SiHz/7iP3VlQexeb5KKjEKEe2lPyMIxeSBROohqxVO4E6yV6ppL9xykTy83tOQvd7tnzoZtDwhrBO2GYNFloYWLyxrzPPOi44WWLWUt618txvASUhhRCKSHgbZt2scKy7HfCujGOqWL9BVfOgyI=)
 
-These instance properties are only added when the instance is first created, so you need to ensure they are all present in the object returned by the `data` function. Where necessary, use `null`, `undefined` or some other placeholder value for properties where the desired value isn't yet available.
+Các thuộc tính của instance chỉ được thêm khi instance được tạo lần đầu, vì vậy bạn cần đảm bảo chúng có mặt trong object trả về bởi hàm `data`. Khi cần, hãy dùng `null`, `undefined` hoặc giá trị placeholder khác cho các thuộc tính chưa có giá trị mong muốn.
 
-It is possible to add a new property directly to `this` without including it in `data`. However, properties added this way will not be able to trigger reactive updates.
+Có thể thêm một thuộc tính mới trực tiếp lên `this` mà không khai báo trong `data`. Tuy nhiên, các thuộc tính thêm theo cách này sẽ không kích hoạt cập nhật reactive.
 
-Vue uses a `$` prefix when exposing its own built-in APIs via the component instance. It also reserves the prefix `_` for internal properties. You should avoid using names for top-level `data` properties that start with either of these characters.
+Vue dùng tiền tố `$` khi lộ các built‑in API của riêng nó qua component instance. Nó cũng dành tiền tố `_` cho các thuộc tính nội bộ. Bạn nên tránh đặt tên thuộc tính `data` ở cấp cao nhất bắt đầu bằng một trong hai ký tự này.
 
 ### Reactive Proxy vs. Original \* {#reactive-proxy-vs-original}
 
-In Vue 3, data is made reactive by leveraging [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Users coming from Vue 2 should be aware of the following edge case:
+Trong Vue 3, dữ liệu được làm reactive bằng cách tận dụng [JavaScript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Người dùng đến từ Vue 2 cần lưu ý trường hợp biên sau:
 
 ```js
 export default {
@@ -61,7 +61,7 @@ export default {
 }
 ```
 
-When you access `this.someObject` after assigning it, the value is a reactive proxy of the original `newObject`. **Unlike in Vue 2, the original `newObject` is left intact and will not be made reactive: make sure to always access reactive state as a property of `this`.**
+Khi bạn truy cập `this.someObject` sau khi gán, giá trị là một reactive proxy của `newObject` gốc. **Không giống Vue 2, `newObject` gốc được giữ nguyên và sẽ không trở thành reactive: hãy đảm bảo luôn truy cập reactive state như một thuộc tính của `this`.**
 
 </div>
 
@@ -71,7 +71,7 @@ When you access `this.someObject` after assigning it, the value is a reactive pr
 
 ### `ref()` \*\* {#ref}
 
-In Composition API, the recommended way to declare reactive state is using the [`ref()`](/api/reactivity-core#ref) function:
+Trong Composition API, cách khuyến nghị để khai báo reactive state là dùng hàm [`ref()`](/api/reactivity-core#ref):
 
 ```js
 import { ref } from 'vue'
@@ -79,7 +79,7 @@ import { ref } from 'vue'
 const count = ref(0)
 ```
 
-`ref()` takes the argument and returns it wrapped within a ref object with a `.value` property:
+`ref()` nhận một đối số và trả về một ref object bọc giá trị đó với thuộc tính `.value`:
 
 ```js
 const count = ref(0)
@@ -93,7 +93,7 @@ console.log(count.value) // 1
 
 > See also: [Typing Refs](/guide/typescript/composition-api#typing-ref) <sup class="vt-badge ts" />
 
-To access refs in a component's template, declare and return them from a component's `setup()` function:
+Để truy cập ref trong template của component, hãy khai báo và return chúng từ hàm `setup()` của component:
 
 ```js{5,9-11}
 import { ref } from 'vue'
@@ -115,7 +115,7 @@ export default {
 <div>{{ count }}</div>
 ```
 
-Notice that we did **not** need to append `.value` when using the ref in the template. For convenience, refs are automatically unwrapped when used inside templates (with a few [caveats](#caveat-when-unwrapping-in-templates)).
+Lưu ý chúng ta **không** cần thêm `.value` khi dùng ref trong template. Để tiện lợi, ref được tự động “unwrap” khi dùng trong template (với một vài [lưu ý](#caveat-when-unwrapping-in-templates)).
 
 You can also mutate a ref directly in event handlers:
 

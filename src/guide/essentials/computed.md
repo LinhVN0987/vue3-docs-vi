@@ -10,7 +10,7 @@
 
 ## Basic Example {#basic-example}
 
-In-template expressions are very convenient, but they are meant for simple operations. Putting too much logic in your templates can make them bloated and hard to maintain. For example, if we have an object with a nested array:
+Biểu thức trong template rất tiện lợi, nhưng chúng dành cho các thao tác đơn giản. Đưa quá nhiều logic vào template có thể khiến nó cồng kềnh và khó bảo trì. Ví dụ, nếu chúng ta có một object với một mảng lồng bên trong:
 
 <div class="options-api">
 
@@ -47,16 +47,16 @@ const author = reactive({
 
 </div>
 
-And we want to display different messages depending on if `author` already has some books or not:
+Và chúng ta muốn hiển thị thông điệp khác nhau tùy theo `author` đã có sách hay chưa:
 
 ```vue-html
 <p>Has published books:</p>
 <span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span>
 ```
 
-At this point, the template is getting a bit cluttered. We have to look at it for a second before realizing that it performs a calculation depending on `author.books`. More importantly, we probably don't want to repeat ourselves if we need to include this calculation in the template more than once.
+Lúc này, template bắt đầu rối rắm. Ta phải nhìn kỹ một chút mới nhận ra nó đang thực hiện một phép tính phụ thuộc vào `author.books`. Quan trọng hơn, có lẽ ta không muốn lặp lại phép tính này nhiều lần trong template.
 
-That's why for complex logic that includes reactive data, it is recommended to use a **computed property**. Here's the same example, refactored:
+Đó là lý do với logic phức tạp liên quan đến dữ liệu reactive, khuyến nghị dùng **computed property**. Đây là ví dụ tương tự, sau khi refactor:
 
 <div class="options-api">
 
@@ -91,13 +91,13 @@ export default {
 
 [Try it in the Playground](https://play.vuejs.org/#eNqFkN1KxDAQhV/l0JsqaFfUq1IquwiKsF6JINaLbDNui20S8rO4lL676c82eCFCIDOZMzkzXxetlUoOjqI0ykypa2XzQtC3ktqC0ydzjUVXCIAzy87OpxjQZJ0WpwxgzlZSp+EBEKylFPGTrATuJcUXobST8sukeA8vQPzqCNe4xJofmCiJ48HV/FfbLLrxog0zdfmn4tYrXirC9mgs6WMcBB+nsJ+C8erHH0rZKmeJL0sot2tqUxHfDONuyRi2p4BggWCr2iQTgGTcLGlI7G2FHFe4Q/xGJoYn8SznQSbTQviTrRboPrHUqoZZ8hmQqfyRmTDFTC1bqalsFBN5183o/3NG33uvoWUwXYyi/gdTEpwK)
 
-Here we have declared a computed property `publishedBooksMessage`.
+Ở đây chúng ta đã khai báo một computed property `publishedBooksMessage`.
 
-Try to change the value of the `books` array in the application `data` and you will see how `publishedBooksMessage` is changing accordingly.
+Hãy thử thay đổi giá trị của mảng `books` trong `data` của ứng dụng và bạn sẽ thấy `publishedBooksMessage` thay đổi tương ứng.
 
-You can data-bind to computed properties in templates just like a normal property. Vue is aware that `this.publishedBooksMessage` depends on `this.author.books`, so it will update any bindings that depend on `this.publishedBooksMessage` when `this.author.books` changes.
+Bạn có thể data‑bind đến computed property trong template giống như một thuộc tính bình thường. Vue biết rằng `this.publishedBooksMessage` phụ thuộc vào `this.author.books`, vì vậy nó sẽ cập nhật bất kỳ binding nào phụ thuộc `this.publishedBooksMessage` khi `this.author.books` thay đổi.
 
-See also: [Typing Computed Properties](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
+Xem thêm: [Typing Computed Properties](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
 
 </div>
 
@@ -130,11 +130,11 @@ const publishedBooksMessage = computed(() => {
 
 [Try it in the Playground](https://play.vuejs.org/#eNp1kE9Lw0AQxb/KI5dtoTainkoaaREUoZ5EEONhm0ybYLO77J9CCfnuzta0vdjbzr6Zeb95XbIwZroPlMySzJW2MR6OfDB5oZrWaOvRwZIsfbOnCUrdmuCpQo+N1S0ET4pCFarUynnI4GttMT9PjLpCAUq2NIN41bXCkyYxiZ9rrX/cDF/xDYiPQLjDDRbVXqqSHZ5DUw2tg3zP8lK6pvxHe2DtvSasDs6TPTAT8F2ofhzh0hTygm5pc+I1Yb1rXE3VMsKsyDm5JcY/9Y5GY8xzHI+wnIpVw4nTI/10R2rra+S4xSPEJzkBvvNNs310ztK/RDlLLjy1Zic9cQVkJn+R7gIwxJGlMXiWnZEq77orhH3Pq2NH9DjvTfpfSBSbmA==)
 
-Here we have declared a computed property `publishedBooksMessage`. The `computed()` function expects to be passed a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description), and the returned value is a **computed ref**. Similar to normal refs, you can access the computed result as `publishedBooksMessage.value`. Computed refs are also auto-unwrapped in templates so you can reference them without `.value` in template expressions.
+Ở đây chúng ta đã khai báo một computed property `publishedBooksMessage`. Hàm `computed()` nhận [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description), và giá trị trả về là một **computed ref**. Tương tự như ref bình thường, bạn có thể truy cập kết quả tính toán qua `publishedBooksMessage.value`. Computed ref cũng được auto‑unwrap trong template nên bạn có thể tham chiếu mà không cần `.value` trong biểu thức template.
 
-A computed property automatically tracks its reactive dependencies. Vue is aware that the computation of `publishedBooksMessage` depends on `author.books`, so it will update any bindings that depend on `publishedBooksMessage` when `author.books` changes.
+Computed property tự động theo dõi các phụ thuộc reactive của nó. Vue biết rằng phép tính `publishedBooksMessage` phụ thuộc `author.books`, vì vậy nó sẽ cập nhật các binding phụ thuộc `publishedBooksMessage` khi `author.books` thay đổi.
 
-See also: [Typing Computed](/guide/typescript/composition-api#typing-computed) <sup class="vt-badge ts" />
+Xem thêm: [Typing Computed](/guide/typescript/composition-api#typing-computed) <sup class="vt-badge ts" />
 
 </div>
 

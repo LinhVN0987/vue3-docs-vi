@@ -1,22 +1,22 @@
 # Ways of Using Vue {#ways-of-using-vue}
 
-We believe there is no "one size fits all" story for the web. This is why Vue is designed to be flexible and incrementally adoptable. Depending on your use case, Vue can be used in different ways to strike the optimal balance between stack complexity, developer experience and end performance.
+Chúng tôi tin rằng không có “một cỡ cho tất cả” trên web. Vì thế Vue được thiết kế linh hoạt và có thể áp dụng dần. Tùy use case, Vue có thể được dùng theo các cách khác nhau để đạt cân bằng tối ưu giữa độ phức tạp stack, trải nghiệm phát triển và hiệu năng cuối cùng.
 
 ## Standalone Script {#standalone-script}
 
-Vue can be used as a standalone script file - no build step required! If you have a backend framework already rendering most of the HTML, or your frontend logic isn't complex enough to justify a build step, this is the easiest way to integrate Vue into your stack. You can think of Vue as a more declarative replacement of jQuery in such cases.
+Vue có thể dùng như một file script độc lập — không cần build step! Nếu backend đã render phần lớn HTML, hoặc logic frontend chưa đủ phức tạp để cần build, đây là cách dễ nhất tích hợp Vue vào stack. Bạn có thể xem Vue như một thay thế mang tính khai báo cho jQuery trong các trường hợp này.
 
-We previously provided an alternative distribution called [petite-vue](https://github.com/vuejs/petite-vue) that was specifically optimized for progressively enhancing existing HTML. However, petite-vue is no longer actively maintained, with the last version published at Vue 3.2.27. 
+Trước đây chúng tôi cung cấp bản phân phối [petite-vue](https://github.com/vuejs/petite-vue) tối ưu cho progressive enhancement, nhưng hiện không còn được duy trì tích cực (phiên bản cuối ở Vue 3.2.27).
 
 ## Embedded Web Components {#embedded-web-components}
 
-You can use Vue to [build standard Web Components](/guide/extras/web-components) that can be embedded in any HTML page, regardless of how they are rendered. This option allows you to leverage Vue in a completely consumer-agnostic fashion: the resulting web components can be embedded in legacy applications, static HTML, or even applications built with other frameworks.
+Bạn có thể dùng Vue để [xây Web Components tiêu chuẩn](/guide/extras/web-components) và nhúng vào bất kỳ trang HTML nào, bất kể cách render. Tùy chọn này cho phép tận dụng Vue theo cách hoàn toàn trung lập: web component kết quả có thể nhúng vào ứng dụng cũ, HTML tĩnh, thậm chí ứng dụng dùng framework khác.
 
 ## Single-Page Application (SPA) {#single-page-application-spa}
 
-Some applications require rich interactivity, deep session depth, and non-trivial stateful logic on the frontend. The best way to build such applications is to use an architecture where Vue not only controls the entire page, but also handles data updates and navigation without having to reload the page. This type of application is typically referred to as a Single-Page Application (SPA).
+Một số ứng dụng cần tương tác phong phú, phiên làm việc dài và stateful logic phức tạp ở frontend. Cách tốt nhất là kiến trúc nơi Vue không chỉ kiểm soát toàn bộ trang mà còn xử lý cập nhật dữ liệu và điều hướng không cần tải lại trang — thường gọi là SPA.
 
-Vue provides core libraries and [comprehensive tooling support](/guide/scaling-up/tooling) with amazing developer experience for building modern SPAs, including:
+Vue cung cấp thư viện lõi và [hệ sinh thái tooling](/guide/scaling-up/tooling) toàn diện với trải nghiệm phát triển tuyệt vời cho SPA hiện đại, bao gồm:
 
 - Client-side router
 - Blazing fast build tool chain
@@ -25,33 +25,33 @@ Vue provides core libraries and [comprehensive tooling support](/guide/scaling-u
 - TypeScript integrations
 - Testing utilities
 
-SPAs typically require the backend to expose API endpoints - but you can also pair Vue with solutions like [Inertia.js](https://inertiajs.com) to get the SPA benefits while retaining a server-centric development model.
+SPA thường yêu cầu backend cung cấp API endpoint — nhưng bạn cũng có thể ghép Vue với [Inertia.js](https://inertiajs.com) để có lợi ích SPA trong khi vẫn giữ mô hình phát triển tập trung ở server.
 
 ## Fullstack / SSR {#fullstack-ssr}
 
-Pure client-side SPAs are problematic when the app is sensitive to SEO and time-to-content. This is because the browser will receive a largely empty HTML page, and has to wait until the JavaScript is loaded before rendering anything.
+SPA thuần client gặp vấn đề khi ứng dụng nhạy với SEO và time‑to‑content, vì trình duyệt nhận HTML gần như rỗng và phải chờ JavaScript tải xong mới render.
 
-Vue provides first-class APIs to "render" a Vue app into HTML strings on the server. This allows the server to send back already-rendered HTML, allowing end users to see the content immediately while the JavaScript is being downloaded. Vue will then "hydrate" the application on the client side to make it interactive. This is called [Server-Side Rendering (SSR)](/guide/scaling-up/ssr) and it greatly improves Core Web Vital metrics such as [Largest Contentful Paint (LCP)](https://web.dev/lcp/).
+Vue cung cấp API hạng nhất để “render” ứng dụng trên server thành chuỗi HTML. Server có thể gửi HTML đã render để người dùng thấy nội dung ngay trong khi JavaScript đang tải; sau đó Vue sẽ “hydrate” ở client để tương tác. Đây là [Server‑Side Rendering (SSR)](/guide/scaling-up/ssr) và cải thiện đáng kể chỉ số Core Web Vitals như [LCP](https://web.dev/lcp/).
 
-There are higher-level Vue-based frameworks built on top of this paradigm, such as [Nuxt](https://nuxt.com/), which allow you to develop a fullstack application using Vue and JavaScript.
+Có các framework cấp cao dựa trên Vue như [Nuxt](https://nuxt.com/) cho phép bạn phát triển fullstack bằng Vue và JavaScript.
 
 ## JAMStack / SSG {#jamstack-ssg}
 
-Server-side rendering can be done ahead of time if the required data is static. This means we can pre-render an entire application into HTML and serve them as static files. This improves site performance and makes deployment a lot simpler since we no longer need to dynamically render pages on each request. Vue can still hydrate such applications to provide rich interactivity on the client. This technique is commonly referred to as Static-Site Generation (SSG), also known as [JAMStack](https://jamstack.org/what-is-jamstack/).
+Server‑side rendering có thể thực hiện trước nếu dữ liệu là tĩnh. Ta có thể pre‑render toàn bộ ứng dụng thành HTML và phục vụ như file tĩnh. Điều này cải thiện hiệu năng và đơn giản hóa triển khai vì không cần render động mỗi request. Vue vẫn có thể hydrate để cung cấp tương tác phong phú. Kỹ thuật này gọi là Static‑Site Generation (SSG), còn được biết đến là [JAMStack](https://jamstack.org/what-is-jamstack/).
 
-There are two flavors of SSG: single-page and multi-page. Both flavors pre-render the site into static HTML, the difference is that:
+Có hai dạng SSG: single‑page và multi‑page. Cả hai đều pre‑render thành HTML tĩnh, khác biệt là:
 
 - After the initial page load, a single-page SSG "hydrates" the page into an SPA. This requires more upfront JS payload and hydration cost, but subsequent navigations will be faster, since it only needs to partially update the page content instead of reloading the entire page.
 
 - A multi-page SSG loads a new page on every navigation. The upside is that it can ship minimal JS - or no JS at all if the page requires no interaction! Some multi-page SSG frameworks such as [Astro](https://astro.build/) also support "partial hydration" - which allows you to use Vue components to create interactive "islands" inside static HTML.
 
-Single-page SSGs are better suited if you expect non-trivial interactivity, deep session lengths, or persisted elements / state across navigations. Otherwise, multi-page SSG would be the better choice.
+Single‑page SSG phù hợp nếu bạn cần tương tác đáng kể, phiên làm việc dài, hoặc phần tử/state được giữ qua lần điều hướng. Ngược lại, multi‑page SSG sẽ phù hợp hơn.
 
-The Vue team also maintains a static-site generator called [VitePress](https://vitepress.dev/), which powers this website you are reading right now! VitePress supports both flavors of SSG. [Nuxt](https://nuxt.com/) also supports SSG. You can even mix SSR and SSG for different routes in the same Nuxt app.
+Team Vue cũng duy trì static‑site generator [VitePress](https://vitepress.dev/), công cụ đang vận hành chính website này! VitePress hỗ trợ cả hai dạng SSG. [Nuxt](https://nuxt.com/) cũng hỗ trợ SSG. Bạn thậm chí có thể trộn SSR và SSG cho các route khác nhau trong cùng ứng dụng Nuxt.
 
 ## Beyond the Web {#beyond-the-web}
 
-Although Vue is primarily designed for building web applications, it is by no means limited to just the browser. You can:
+Dù Vue chủ yếu thiết kế cho web, nó không chỉ giới hạn trong trình duyệt. Bạn có thể:
 
 - Build desktop apps with [Electron](https://www.electronjs.org/) or [Wails](https://wails.io)
 - Build mobile apps with [Ionic Vue](https://ionicframework.com/docs/vue/overview)

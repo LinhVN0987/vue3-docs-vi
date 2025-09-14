@@ -74,7 +74,7 @@ The [original version](https://github.com/vuejs/vue-cli/blob/a09407dd5b9f18ace75
 
 <img alt="folder component before" src="./images/options-api.png" width="129" height="500" style="margin: 1.2em auto">
 
-Notice how code dealing with the same logical concern is forced to be split under different options, located in different parts of the file. In a component that is several hundred lines long, understanding and navigating a single logical concern requires constantly scrolling up and down the file, making it much more difficult than it should be. In addition, if we ever intend to extract a logical concern into a reusable utility, it takes quite a bit of work to find and extract the right pieces of code from different parts of the file.
+Hãy chú ý cách code cho cùng một mối quan tâm bị buộc chia dưới các option khác nhau, nằm rải rác trong file. Ở component vài trăm dòng, hiểu và theo dõi một mối quan tâm yêu cầu cuộn lên xuống liên tục, khó hơn nhiều so với mong đợi. Thêm vào đó, nếu muốn trích xuất một mối quan tâm thành tiện ích tái sử dụng, sẽ mất nhiều công sức để tìm và tách đúng phần code ở các vị trí khác nhau.
 
 Here's the same component, before and after the [refactor into Composition API](https://gist.github.com/yyx990803/8854f8f6a97631576c14b63c8acd8f2e):
 
@@ -118,13 +118,13 @@ If you intend to exclusively use Composition API (along with the options listed 
 
 ### Can I use both APIs in the same component? {#can-i-use-both-apis-in-the-same-component}
 
-Yes. You can use Composition API via the [`setup()`](/api/composition-api-setup) option in an Options API component.
+Có. Bạn có thể dùng Composition API qua tùy chọn [`setup()`](/api/composition-api-setup) trong một component Options API.
 
-However, we only recommend doing so if you have an existing Options API codebase that needs to integrate with new features / external libraries written with Composition API.
+Tuy nhiên, chỉ nên làm vậy nếu bạn có codebase Options API hiện có cần tích hợp tính năng mới / thư viện bên ngoài viết với Composition API.
 
 ### Will Options API be deprecated? {#will-options-api-be-deprecated}
 
-No, we do not have any plan to do so. Options API is an integral part of Vue and the reason many developers love it. We also realize that many of the benefits of Composition API only manifest in larger-scale projects, and Options API remains a solid choice for many low-to-medium-complexity scenarios.
+Không. Chúng tôi không có kế hoạch như vậy. Options API là phần không thể thiếu của Vue và là lý do nhiều lập trình viên yêu thích nó. Chúng tôi cũng nhận thấy lợi ích của Composition API chủ yếu thể hiện ở dự án quy mô lớn, và Options API vẫn là lựa chọn vững chắc cho nhiều tình huống độ phức tạp thấp‑trung bình.
 
 ## Relationship with Class API {#relationship-with-class-api}
 

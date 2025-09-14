@@ -11,10 +11,10 @@ onMounted(load)
 
 <template>
   <section id="hero">
-    <img id="uwu" alt="Vue.js Kawaii Logo by @icarusgkx" />
+    <img id="uwu" alt="Vue.js Kawaii Logo by @icarusgkx" src="logo-uwu.png" />
     <h1 class="tagline">
       The
-      <span class="accent">Progressive</span>
+      <span class="accent">Fucking Progressive</span>
       <br />JavaScript Framework
     </h1>
     <p class="description">
@@ -361,13 +361,13 @@ html:not(.dark) .accent,
 }
 
 #uwu {
-  display: none;
+  display: block;
 }
 
 .uwu #uwu {
   display: block;
   width: 100%;
-  max-width: 720px;
+  max-width: 60vh;
   margin: -120px auto -20px;
   aspect-ratio: 192 / 108;
   content: url(/logo-uwu.png);
@@ -375,7 +375,7 @@ html:not(.dark) .accent,
 
 @media (max-width: 576px) {
   .uwu #uwu {
-    margin: -60px auto -10px;
+    margin: -30px auto -10px;
   }
 }
 </style>

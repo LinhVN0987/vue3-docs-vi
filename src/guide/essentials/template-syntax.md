@@ -4,25 +4,25 @@
   Watch an interactive video lesson on Scrimba
 </ScrimbaLink>
 
-Vue uses an HTML-based template syntax that allows you to declaratively bind the rendered DOM to the underlying component instance's data. All Vue templates are syntactically valid HTML that can be parsed by spec-compliant browsers and HTML parsers.
+Vue dùng template syntax dựa trên HTML cho phép bạn bind DOM render ra với dữ liệu của component một cách khai báo. Mọi template của Vue đều là HTML hợp lệ về mặt cú pháp và có thể được parse bởi các trình duyệt và HTML parser tuân thủ tiêu chuẩn.
 
-Under the hood, Vue compiles the templates into highly-optimized JavaScript code. Combined with the reactivity system, Vue can intelligently figure out the minimal number of components to re-render and apply the minimal amount of DOM manipulations when the app state changes.
+Bên dưới, Vue biên dịch template thành mã JavaScript được tối ưu cao. Kết hợp với hệ thống reactivity, Vue có thể xác định thông minh số lượng component tối thiểu cần re‑render và thực hiện tối thiểu các thao tác DOM khi state của ứng dụng thay đổi.
 
-If you are familiar with Virtual DOM concepts and prefer the raw power of JavaScript, you can also [directly write render functions](/guide/extras/render-function) instead of templates, with optional JSX support. However, do note that they do not enjoy the same level of compile-time optimizations as templates.
+Nếu bạn quen với khái niệm Virtual DOM và thích sức mạnh thuần của JavaScript, bạn cũng có thể [viết render function trực tiếp](/guide/extras/render-function) thay cho template, với hỗ trợ JSX tùy chọn. Tuy nhiên, lưu ý rằng chúng không được tối ưu ở compile‑time như template.
 
 ## Text Interpolation {#text-interpolation}
 
-The most basic form of data binding is text interpolation using the "Mustache" syntax (double curly braces):
+Hình thức binding dữ liệu cơ bản nhất là text interpolation dùng cú pháp "Mustache" (hai dấu ngoặc nhọn):
 
 ```vue-html
 <span>Message: {{ msg }}</span>
 ```
 
-The mustache tag will be replaced with the value of the `msg` property [from the corresponding component instance](/guide/essentials/reactivity-fundamentals#declaring-reactive-state). It will also be updated whenever the `msg` property changes.
+Thẻ mustache sẽ được thay thế bằng giá trị của thuộc tính `msg` [từ component instance tương ứng](/guide/essentials/reactivity-fundamentals#declaring-reactive-state). Nó cũng sẽ được cập nhật mỗi khi thuộc tính `msg` thay đổi.
 
 ## Raw HTML {#raw-html}
 
-The double mustaches interpret the data as plain text, not HTML. In order to output real HTML, you will need to use the [`v-html` directive](/api/built-in-directives#v-html):
+Hai dấu ngoặc nhọn hiểu dữ liệu là plain text, không phải HTML. Để xuất ra HTML thực sự, bạn cần dùng [`v-html` directive](/api/built-in-directives#v-html):
 
 ```vue-html
 <p>Using text interpolation: {{ rawHtml }}</p>
@@ -38,41 +38,41 @@ The double mustaches interpret the data as plain text, not HTML. In order to out
   <p>Using v-html directive: <span v-html="rawHtml"></span></p>
 </div>
 
-Here we're encountering something new. The `v-html` attribute you're seeing is called a **directive**. Directives are prefixed with `v-` to indicate that they are special attributes provided by Vue, and as you may have guessed, they apply special reactive behavior to the rendered DOM. Here, we're basically saying "keep this element's inner HTML up-to-date with the `rawHtml` property on the current active instance."
+Ở đây chúng ta gặp khái niệm mới. Thuộc tính `v-html` bạn thấy được gọi là **directive**. Các directive có tiền tố `v-` để chỉ rằng đây là các thuộc tính đặc biệt do Vue cung cấp, và như bạn đoán, chúng áp dụng hành vi reactive đặc biệt lên DOM được render. Ở đây, ta đang nói rằng "giữ inner HTML của phần tử này luôn đồng bộ với thuộc tính `rawHtml` trên current active instance."
 
-The contents of the `span` will be replaced with the value of the `rawHtml` property, interpreted as plain HTML - data bindings are ignored. Note that you cannot use `v-html` to compose template partials, because Vue is not a string-based templating engine. Instead, components are preferred as the fundamental unit for UI reuse and composition.
+Nội dung của `span` sẽ được thay bằng giá trị của thuộc tính `rawHtml`, được hiểu là HTML thuần — mọi data binding sẽ bị bỏ qua. Lưu ý bạn không thể dùng `v-html` để ghép các template partial, vì Vue không phải templating engine dựa trên chuỗi. Thay vào đó, component là đơn vị cơ bản để tái sử dụng và cấu thành UI.
 
 :::warning Security Warning
-Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to [XSS vulnerabilities](https://en.wikipedia.org/wiki/Cross-site_scripting). Only use `v-html` on trusted content and **never** on user-provided content.
+Render động HTML tùy ý trên website có thể rất nguy hiểm vì dễ dẫn đến [lỗ hổng XSS](https://en.wikipedia.org/wiki/Cross-site_scripting). Chỉ dùng `v-html` với nội dung đáng tin cậy và **không bao giờ** dùng với nội dung do người dùng cung cấp.
 :::
 
 ## Attribute Bindings {#attribute-bindings}
 
-Mustaches cannot be used inside HTML attributes. Instead, use a [`v-bind` directive](/api/built-in-directives#v-bind):
+Mustache không thể dùng bên trong HTML attributes. Thay vào đó, dùng [`v-bind` directive](/api/built-in-directives#v-bind):
 
 ```vue-html
 <div v-bind:id="dynamicId"></div>
 ```
 
-The `v-bind` directive instructs Vue to keep the element's `id` attribute in sync with the component's `dynamicId` property. If the bound value is `null` or `undefined`, then the attribute will be removed from the rendered element.
+`v-bind` hướng dẫn Vue giữ cho thuộc tính `id` của phần tử luôn đồng bộ với thuộc tính `dynamicId` của component. Nếu giá trị bind là `null` hoặc `undefined`, thuộc tính sẽ bị loại bỏ khỏi phần tử render ra.
 
 ### Shorthand {#shorthand}
 
-Because `v-bind` is so commonly used, it has a dedicated shorthand syntax:
+Vì `v-bind` được dùng rất thường xuyên, nó có shorthand syntax riêng:
 
 ```vue-html
 <div :id="dynamicId"></div>
 ```
 
-Attributes that start with `:` may look a bit different from normal HTML, but it is in fact a valid character for attribute names and all Vue-supported browsers can parse it correctly. In addition, they do not appear in the final rendered markup. The shorthand syntax is optional, but you will likely appreciate it when you learn more about its usage later.
+Các attribute bắt đầu bằng `:` có thể trông hơi khác HTML thông thường, nhưng thực ra đây là ký tự hợp lệ cho tên attribute và tất cả trình duyệt được Vue hỗ trợ đều parse đúng. Ngoài ra, chúng không xuất hiện trong markup render cuối cùng. Shorthand syntax là tùy chọn, nhưng có lẽ bạn sẽ thấy nó tiện lợi hơn khi dùng nhiều sau này.
 
-> For the rest of the guide, we will be using the shorthand syntax in code examples, as that's the most common usage for Vue developers.
+> Với phần còn lại của hướng dẫn, chúng tôi sẽ dùng shorthand syntax trong ví dụ code vì đó là cách dùng phổ biến nhất với lập trình viên Vue.
 
 ### Same-name Shorthand {#same-name-shorthand}
 
-- Only supported in 3.4+
+- Chỉ hỗ trợ từ 3.4+
 
-If the attribute has the same name as the variable name of the JavaScript value being bound, the syntax can be further shortened to omit the attribute value:
+Nếu attribute có cùng tên với biến JavaScript đang được bind, cú pháp có thể rút gọn hơn nữa bằng cách lược bỏ giá trị của attribute:
 
 ```vue-html
 <!-- same as :id="id" -->
@@ -82,23 +82,23 @@ If the attribute has the same name as the variable name of the JavaScript value 
 <div v-bind:id></div>
 ```
 
-This is similar to the property shorthand syntax when declaring objects in JavaScript. Note this is a feature that is only available in Vue 3.4 and above.
+Điều này tương tự property shorthand khi khai báo object trong JavaScript. Lưu ý đây là tính năng chỉ có từ Vue 3.4 trở lên.
 
 ### Boolean Attributes {#boolean-attributes}
 
-[Boolean attributes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes) are attributes that can indicate true / false values by their presence on an element. For example, [`disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) is one of the most commonly used boolean attributes.
+[Boolean attributes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes) là các attribute thể hiện giá trị true/false thông qua sự hiện diện trên phần tử. Ví dụ, [`disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) là một boolean attribute được dùng rất phổ biến.
 
-`v-bind` works a bit differently in this case:
+Trong trường hợp này, `v-bind` hoạt động hơi khác:
 
 ```vue-html
 <button :disabled="isButtonDisabled">Button</button>
 ```
 
-The `disabled` attribute will be included if `isButtonDisabled` has a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy). It will also be included if the value is an empty string, maintaining consistency with `<button disabled="">`. For other [falsy values](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) the attribute will be omitted.
+Attribute `disabled` sẽ được thêm nếu `isButtonDisabled` có [giá trị truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy). Nó cũng sẽ được thêm nếu giá trị là chuỗi rỗng, giữ nhất quán với `<button disabled="">`. Với các [giá trị falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) khác, attribute sẽ bị bỏ qua.
 
 ### Dynamically Binding Multiple Attributes {#dynamically-binding-multiple-attributes}
 
-If you have a JavaScript object representing multiple attributes that looks like this:
+Nếu bạn có một object JavaScript đại diện cho nhiều attribute như sau:
 
 <div class="composition-api">
 
@@ -126,7 +126,7 @@ data() {
 
 </div>
 
-You can bind them to a single element by using `v-bind` without an argument:
+Bạn có thể bind chúng vào một phần tử duy nhất bằng cách dùng `v-bind` không có tham số:
 
 ```vue-html
 <div v-bind="objectOfAttrs"></div>
@@ -134,7 +134,7 @@ You can bind them to a single element by using `v-bind` without an argument:
 
 ## Using JavaScript Expressions {#using-javascript-expressions}
 
-So far we've only been binding to simple property keys in our templates. But Vue actually supports the full power of JavaScript expressions inside all data bindings:
+Từ nãy đến giờ, chúng ta chỉ bind các property key đơn giản trong template. Nhưng thực tế, Vue hỗ trợ đầy đủ sức mạnh của JavaScript expression trong mọi kiểu data binding:
 
 ```vue-html
 {{ number + 1 }}
@@ -146,18 +146,18 @@ So far we've only been binding to simple property keys in our templates. But Vue
 <div :id="`list-${id}`"></div>
 ```
 
-These expressions will be evaluated as JavaScript in the data scope of the current component instance.
+Các expression này sẽ được đánh giá như JavaScript trong phạm vi dữ liệu của component instance hiện tại.
 
-In Vue templates, JavaScript expressions can be used in the following positions:
+Trong template của Vue, JavaScript expression có thể dùng ở các vị trí sau:
 
-- Inside text interpolations (mustaches)
-- In the attribute value of any Vue directives (special attributes that start with `v-`)
+- Bên trong text interpolation (mustache)
+- Trong giá trị attribute của bất kỳ Vue directive nào (các thuộc tính đặc biệt bắt đầu với `v-`)
 
 ### Expressions Only {#expressions-only}
 
-Each binding can only contain **one single expression**. An expression is a piece of code that can be evaluated to a value. A simple check is whether it can be used after `return`.
+Mỗi binding chỉ có thể chứa **một expression duy nhất**. Expression là một đoạn code có thể được đánh giá thành một giá trị. Cách kiểm tra đơn giản là nó có thể được dùng sau `return` hay không.
 
-Therefore, the following will **NOT** work:
+Vì vậy, các ví dụ sau **KHÔNG** hoạt động:
 
 ```vue-html
 <!-- this is a statement, not an expression: -->
@@ -169,7 +169,7 @@ Therefore, the following will **NOT** work:
 
 ### Calling Functions {#calling-functions}
 
-It is possible to call a component-exposed method inside a binding expression:
+Có thể gọi method được component lộ ra bên trong một binding expression:
 
 ```vue-html
 <time :title="toTitleDate(date)" :datetime="date">
@@ -178,30 +178,30 @@ It is possible to call a component-exposed method inside a binding expression:
 ```
 
 :::tip
-Functions called inside binding expressions will be called every time the component updates, so they should **not** have any side effects, such as changing data or triggering asynchronous operations.
+Các hàm được gọi trong binding expression sẽ được gọi mỗi lần component cập nhật, nên chúng **không** nên có side effect, như thay đổi dữ liệu hoặc kích hoạt thao tác bất đồng bộ.
 :::
 
 ### Restricted Globals Access {#restricted-globals-access}
 
-Template expressions are sandboxed and only have access to a [restricted list of globals](https://github.com/vuejs/core/blob/main/packages/shared/src/globalsAllowList.ts#L3). The list exposes commonly used built-in globals such as `Math` and `Date`.
+Template expression được sandbox và chỉ có thể truy cập [danh sách globals bị giới hạn](https://github.com/vuejs/core/blob/main/packages/shared/src/globalsAllowList.ts#L3). Danh sách này cung cấp các global built‑in thường dùng như `Math` và `Date`.
 
-Globals not explicitly included in the list, for example user-attached properties on `window`, will not be accessible in template expressions. You can, however, explicitly define additional globals for all Vue expressions by adding them to [`app.config.globalProperties`](/api/application#app-config-globalproperties).
+Các global không nằm trong danh sách, ví dụ thuộc tính người dùng gắn vào `window`, sẽ không truy cập được trong template expression. Tuy nhiên, bạn có thể định nghĩa rõ ràng các global bổ sung cho mọi Vue expression bằng cách thêm chúng vào [`app.config.globalProperties`](/api/application#app-config-globalproperties).
 
 ## Directives {#directives}
 
-Directives are special attributes with the `v-` prefix. Vue provides a number of [built-in directives](/api/built-in-directives), including `v-html` and `v-bind` which we have introduced above.
+Directive là các thuộc tính đặc biệt có tiền tố `v-`. Vue cung cấp một số [built‑in directives](/api/built-in-directives), bao gồm `v-html` và `v-bind` như đã giới thiệu ở trên.
 
-Directive attribute values are expected to be single JavaScript expressions (with the exception of `v-for`, `v-on` and `v-slot`, which will be discussed in their respective sections later). A directive's job is to reactively apply updates to the DOM when the value of its expression changes. Take [`v-if`](/api/built-in-directives#v-if) as an example:
+Giá trị của attribute trên directive được kỳ vọng là một JavaScript expression duy nhất (ngoại trừ `v-for`, `v-on` và `v-slot`, sẽ được bàn trong các phần riêng). Nhiệm vụ của directive là áp dụng cập nhật lên DOM một cách reactive khi giá trị expression của nó thay đổi. Ví dụ [`v-if`](/api/built-in-directives#v-if):
 
 ```vue-html
 <p v-if="seen">Now you see me</p>
 ```
 
-Here, the `v-if` directive would remove or insert the `<p>` element based on the truthiness of the value of the expression `seen`.
+Ở đây, directive `v-if` sẽ xóa hoặc chèn phần tử `<p>` dựa trên truthiness của giá trị expression `seen`.
 
 ### Arguments {#arguments}
 
-Some directives can take an "argument", denoted by a colon after the directive name. For example, the `v-bind` directive is used to reactively update an HTML attribute:
+Một số directive có thể nhận "argument", ký hiệu bằng dấu hai chấm sau tên directive. Ví dụ, directive `v-bind` dùng để cập nhật một HTML attribute một cách reactive:
 
 ```vue-html
 <a v-bind:href="url"> ... </a>
@@ -210,9 +210,9 @@ Some directives can take an "argument", denoted by a colon after the directive n
 <a :href="url"> ... </a>
 ```
 
-Here, `href` is the argument, which tells the `v-bind` directive to bind the element's `href` attribute to the value of the expression `url`. In the shorthand, everything before the argument (i.e., `v-bind:`) is condensed into a single character, `:`.
+Ở đây, `href` là argument, cho `v-bind` biết cần bind attribute `href` của phần tử với giá trị expression `url`. Ở dạng viết tắt, toàn bộ phần trước argument (tức `v-bind:`) được rút gọn thành một ký tự `:`.
 
-Another example is the `v-on` directive, which listens to DOM events:
+Một ví dụ khác là directive `v-on`, lắng nghe các DOM event:
 
 ```vue-html
 <a v-on:click="doSomething"> ... </a>
@@ -221,11 +221,11 @@ Another example is the `v-on` directive, which listens to DOM events:
 <a @click="doSomething"> ... </a>
 ```
 
-Here, the argument is the event name to listen to: `click`. `v-on` has a corresponding shorthand, namely the `@` character. We will talk about event handling in more detail too.
+Ở đây, argument là tên event cần lắng nghe: `click`. `v-on` có shorthand tương ứng là ký tự `@`. Chúng ta cũng sẽ bàn về xử lý sự kiện chi tiết hơn.
 
 ### Dynamic Arguments {#dynamic-arguments}
 
-It is also possible to use a JavaScript expression in a directive argument by wrapping it with square brackets:
+Cũng có thể dùng JavaScript expression trong argument của directive bằng cách bao trong dấu ngoặc vuông:
 
 ```vue-html
 <!--
@@ -238,9 +238,9 @@ as explained in the "Dynamic Argument Value Constraints" and "Dynamic Argument S
 <a :[attributeName]="url"> ... </a>
 ```
 
-Here, `attributeName` will be dynamically evaluated as a JavaScript expression, and its evaluated value will be used as the final value for the argument. For example, if your component instance has a data property, `attributeName`, whose value is `"href"`, then this binding will be equivalent to `v-bind:href`.
+Ở đây, `attributeName` sẽ được đánh giá động như một JavaScript expression, và giá trị sau khi đánh giá sẽ được dùng làm giá trị cuối cùng cho argument. Ví dụ, nếu component instance của bạn có data property `attributeName` với giá trị `"href"`, thì binding này tương đương `v-bind:href`.
 
-Similarly, you can use dynamic arguments to bind a handler to a dynamic event name:
+Tương tự, bạn có thể dùng dynamic argument để bind một handler cho một tên event động:
 
 ```vue-html
 <a v-on:[eventName]="doSomething"> ... </a>
@@ -249,42 +249,42 @@ Similarly, you can use dynamic arguments to bind a handler to a dynamic event na
 <a @[eventName]="doSomething"> ... </a>
 ```
 
-In this example, when `eventName`'s value is `"focus"`, `v-on:[eventName]` will be equivalent to `v-on:focus`.
+Trong ví dụ này, khi giá trị của `eventName` là `"focus"`, `v-on:[eventName]` tương đương `v-on:focus`.
 
 #### Dynamic Argument Value Constraints {#dynamic-argument-value-constraints}
 
-Dynamic arguments are expected to evaluate to a string, with the exception of `null`. The special value `null` can be used to explicitly remove the binding. Any other non-string value will trigger a warning.
+Dynamic argument được kỳ vọng đánh giá ra một chuỗi, ngoại trừ `null`. Giá trị đặc biệt `null` có thể dùng để gỡ bỏ binding một cách tường minh. Bất kỳ giá trị không phải chuỗi nào khác sẽ gây cảnh báo.
 
 #### Dynamic Argument Syntax Constraints {#dynamic-argument-syntax-constraints}
 
-Dynamic argument expressions have some syntax constraints because certain characters, such as spaces and quotes, are invalid inside HTML attribute names. For example, the following is invalid:
+Dynamic argument expression có một số ràng buộc cú pháp vì một số ký tự như khoảng trắng và dấu nháy không hợp lệ trong tên HTML attribute. Ví dụ sau là không hợp lệ:
 
 ```vue-html
 <!-- This will trigger a compiler warning. -->
 <a :['foo' + bar]="value"> ... </a>
 ```
 
-If you need to pass a complex dynamic argument, it's probably better to use a [computed property](./computed), which we will cover shortly.
+Nếu bạn cần truyền một dynamic argument phức tạp, tốt hơn nên dùng [computed property](./computed), chúng ta sẽ tìm hiểu ngay sau đây.
 
-When using in-DOM templates (templates directly written in an HTML file), you should also avoid naming keys with uppercase characters, as browsers will coerce attribute names into lowercase:
+Khi dùng in‑DOM template (template viết trực tiếp trong file HTML), bạn cũng nên tránh đặt key có ký tự viết hoa, vì trình duyệt sẽ chuyển attribute name thành chữ thường:
 
 ```vue-html
 <a :[someAttr]="value"> ... </a>
 ```
 
-The above will be converted to `:[someattr]` in in-DOM templates. If your component has a `someAttr` property instead of `someattr`, your code won't work. Templates inside Single-File Components are **not** subject to this constraint.
+Đoạn trên sẽ bị chuyển thành `:[someattr]` trong in‑DOM template. Nếu component của bạn có property `someAttr` thay vì `someattr`, code sẽ không hoạt động. Template bên trong Single‑File Components **không** bị ràng buộc này.
 
 ### Modifiers {#modifiers}
 
-Modifiers are special postfixes denoted by a dot, which indicate that a directive should be bound in some special way. For example, the `.prevent` modifier tells the `v-on` directive to call `event.preventDefault()` on the triggered event:
+Modifier là hậu tố đặc biệt được ký hiệu bằng dấu chấm, cho biết directive nên được bind theo một cách đặc biệt. Ví dụ, modifier `.prevent` yêu cầu directive `v-on` gọi `event.preventDefault()` trên event được kích hoạt:
 
 ```vue-html
 <form @submit.prevent="onSubmit">...</form>
 ```
 
-You'll see other examples of modifiers later, [for `v-on`](./event-handling#event-modifiers) and [for `v-model`](./forms#modifiers), when we explore those features.
+Bạn sẽ thấy các ví dụ khác về modifier sau này, [cho `v-on`](./event-handling#event-modifiers) và [cho `v-model`](./forms#modifiers), khi chúng ta khám phá các tính năng đó.
 
-And finally, here's the full directive syntax visualized:
+Và cuối cùng, đây là hình minh họa đầy đủ về cú pháp directive:
 
 ![directive syntax graph](./images/directive.png)
 

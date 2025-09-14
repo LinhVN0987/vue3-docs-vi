@@ -29,7 +29,7 @@ const options = ref([
   <VueSchoolLink href="https://vueschool.io/lessons/vue-fundamentals-capi-user-inputs-in-vue" title="Free Lesson on User Inputs with Vue.js"/>
 </div>
 
-When dealing with forms on the frontend, we often need to sync the state of form input elements with corresponding state in JavaScript. It can be cumbersome to manually wire up value bindings and change event listeners:
+Khi làm việc với form ở frontend, chúng ta thường cần đồng bộ state của các input với state tương ứng trong JavaScript. Việc tự tay nối value binding và lắng nghe sự kiện thay đổi có thể rườm rà:
 
 ```vue-html
 <input
@@ -37,20 +37,20 @@ When dealing with forms on the frontend, we often need to sync the state of form
   @input="event => text = event.target.value">
 ```
 
-The `v-model` directive helps us simplify the above to:
+Directive `v-model` giúp đơn giản hóa như sau:
 
 ```vue-html
 <input v-model="text">
 ```
 
-In addition, `v-model` can be used on inputs of different types, `<textarea>`, and `<select>` elements. It automatically expands to different DOM property and event pairs based on the element it is used on:
+Ngoài ra, `v-model` có thể dùng trên input các loại khác nhau, phần tử `<textarea>` và `<select>`. Nó tự động ánh xạ tới các cặp DOM property và event khác nhau tùy phần tử được dùng trên đó:
 
 - `<input>` with text types and `<textarea>` elements use `value` property and `input` event;
 - `<input type="checkbox">` and `<input type="radio">` use `checked` property and `change` event;
 - `<select>` uses `value` as a prop and `change` as an event.
 
 ::: tip Note
-`v-model` will ignore the initial `value`, `checked` or `selected` attributes found on any form elements. It will always treat the current bound JavaScript state as the source of truth. You should declare the initial value on the JavaScript side, using <span class="options-api">the [`data`](/api/options-state.html#data) option</span><span class="composition-api">[reactivity APIs](/api/reactivity-core.html#reactivity-api-core)</span>.
+`v-model` sẽ bỏ qua các attribute khởi tạo `value`, `checked` hoặc `selected` trên bất kỳ phần tử form nào. Nó luôn coi state JavaScript đang bind hiện tại là “nguồn sự thật”. Bạn nên khai báo giá trị khởi tạo ở phía JavaScript, dùng <span class="options-api">tùy chọn [`data`](/api/options-state.html#data)</span><span class="composition-api">[reactivity APIs](/api/reactivity-core.html#reactivity-api-core)</span>.
 :::
 
 ## Basic Usage {#basic-usage}
@@ -108,7 +108,7 @@ For languages that require an [IME](https://en.wikipedia.org/wiki/Input_method) 
 
 </div>
 
-Note that interpolation inside `<textarea>` won't work. Use `v-model` instead.
+Lưu ý interpolation bên trong `<textarea>` sẽ không hoạt động. Hãy dùng `v-model` thay thế.
 
 ```vue-html
 <!-- bad -->

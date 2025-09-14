@@ -2,15 +2,15 @@
 
  <VueSchoolLink href="https://vueschool.io/lessons/vue-3-teleport" title="Free Vue.js Teleport Lesson"/>
 
-`<Teleport>` is a built-in component that allows us to "teleport" a part of a component's template into a DOM node that exists outside the DOM hierarchy of that component.
+`<Teleport>` là built‑in component cho phép “teleport” một phần template của component vào một DOM node nằm ngoài cây DOM của chính component đó.
 
 ## Basic Usage {#basic-usage}
 
-Sometimes a part of a component's template belongs to it logically, but from a visual standpoint, it should be displayed somewhere else in the DOM, perhaps even outside of the Vue application.
+Đôi khi một phần template về mặt logic thuộc về component, nhưng về hiển thị, nó nên hiện ở nơi khác trong DOM, thậm chí ngoài ứng dụng Vue.
 
-The most common example of this is when building a full-screen modal. Ideally, we want the code for the modal's button and the modal itself to be written within the same single-file component, since they are both related to the open / close state of the modal. But that means the modal will be rendered alongside the button, deeply nested in the application's DOM hierarchy. This can create some tricky issues when positioning the modal via CSS.
+Ví dụ phổ biến nhất là khi xây modal toàn màn hình. Lý tưởng là code cho nút mở modal và bản thân modal ở cùng một single‑file component, vì chúng cùng liên quan đến trạng thái mở/đóng của modal. Nhưng điều đó khiến modal được render cạnh nút, lồng sâu trong cây DOM của ứng dụng. Việc định vị modal bằng CSS có thể phát sinh vấn đề.
 
-Consider the following HTML structure.
+Xem cấu trúc HTML sau.
 
 ```vue-html
 <div class="outer">
@@ -21,7 +21,7 @@ Consider the following HTML structure.
 </div>
 ```
 
-And here is the implementation of `<MyModal>`:
+Và đây là phần triển khai `<MyModal>`:
 
 <div class="composition-api">
 
@@ -90,15 +90,15 @@ export default {
 
 </div>
 
-The component contains a `<button>` to trigger the opening of the modal, and a `<div>` with a class of `.modal`, which will contain the modal's content and a button to self-close.
+Component chứa một `<button>` để mở modal, và một `<div>` với class `.modal`, chứa nội dung của modal và nút đóng.
 
-When using this component inside the initial HTML structure, there are a number of potential issues:
+Khi dùng component này trong cấu trúc HTML ban đầu, có một số vấn đề tiềm ẩn:
 
 - `position: fixed` only places the element relative to the viewport when no ancestor element has `transform`, `perspective` or `filter` property set. If, for example, we intend to animate the ancestor `<div class="outer">` with a CSS transform, it would break the modal layout!
 
 - The modal's `z-index` is constrained by its containing elements. If there is another element that overlaps with `<div class="outer">` and has a higher `z-index`, it would cover our modal.
 
-`<Teleport>` provides a clean way to work around these, by allowing us to break out of the nested DOM structure. Let's modify `<MyModal>` to use `<Teleport>`:
+`<Teleport>` cung cấp cách gọn gàng để xử lý: cho phép thoát khỏi cấu trúc DOM lồng nhau. Hãy sửa `<MyModal>` để dùng `<Teleport>`:
 
 ```vue-html{3,8}
 <button @click="open = true">Open Modal</button>
@@ -111,9 +111,9 @@ When using this component inside the initial HTML structure, there are a number 
 </Teleport>
 ```
 
-The `to` target of `<Teleport>` expects a CSS selector string or an actual DOM node. Here, we are essentially telling Vue to "**teleport** this template fragment **to** the **`body`** tag".
+`to` của `<Teleport>` nhận một CSS selector hoặc một DOM node. Ở đây, chúng ta đang nói với Vue “**teleport** đoạn template này **đến** thẻ **`body`**”.
 
-You can click the button below and inspect the `<body>` tag via your browser's devtools:
+Bạn có thể bấm nút bên dưới và kiểm tra thẻ `<body>` bằng devtools của trình duyệt:
 
 <script setup>
 import { ref } from 'vue'
@@ -147,21 +147,21 @@ const open = ref(false)
 }
 </style>
 
-You can combine `<Teleport>` with [`<Transition>`](./transition) to create animated modals - see [Example here](/examples/#modal).
+Bạn có thể kết hợp `<Teleport>` với [`<Transition>`](./transition) để tạo modal có animation — xem [ví dụ](/examples/#modal).
 
 :::tip
-The teleport `to` target must be already in the DOM when the `<Teleport>` component is mounted. Ideally, this should be an element outside the entire Vue application. If targeting another element rendered by Vue, you need to make sure that element is mounted before the `<Teleport>`.
+Mục tiêu `to` phải có sẵn trong DOM khi component `<Teleport>` được mount. Lý tưởng là một phần tử nằm ngoài toàn bộ ứng dụng Vue. Nếu nhắm tới phần tử do Vue render, cần đảm bảo phần tử đó được mount trước `<Teleport>`.
 :::
 
 ## Using with Components {#using-with-components}
 
-`<Teleport>` only alters the rendered DOM structure - it does not affect the logical hierarchy of the components. That is to say, if `<Teleport>` contains a component, that component will remain a logical child of the parent component containing the `<Teleport>`. Props passing and event emitting will continue to work the same way.
+`<Teleport>` chỉ thay đổi cấu trúc DOM render — không ảnh hưởng hệ phân cấp logic của component. Tức là, nếu `<Teleport>` chứa một component, component đó vẫn là con logic của component cha chứa `<Teleport>`. Truyền props và emit event vẫn hoạt động như cũ.
 
-This also means that injections from a parent component work as expected, and that the child component will be nested below the parent component in the Vue Devtools, instead of being placed where the actual content moved to.
+Điều này cũng có nghĩa injection từ parent hoạt động như mong đợi, và child component vẫn nằm dưới parent trong Vue Devtools, thay vì ở vị trí nội dung thực tế được chuyển tới.
 
 ## Disabling Teleport {#disabling-teleport}
 
-In some cases, we may want to conditionally disable `<Teleport>`. For example, we may want to render a component as an overlay for desktop, but inline on mobile. `<Teleport>` supports the `disabled` prop which can be dynamically toggled:
+Một số trường hợp, ta muốn tắt `<Teleport>` có điều kiện. Ví dụ, render component dạng overlay trên desktop, nhưng inline trên mobile. `<Teleport>` hỗ trợ prop `disabled` có thể bật/tắt động:
 
 ```vue-html
 <Teleport :disabled="isMobile">
@@ -173,7 +173,7 @@ We could then dynamically update `isMobile`.
 
 ## Multiple Teleports on the Same Target {#multiple-teleports-on-the-same-target}
 
-A common use case would be a reusable `<Modal>` component, with the potential for multiple instances to be active at the same time. For this kind of scenario, multiple `<Teleport>` components can mount their content to the same target element. The order will be a simple append, with later mounts located after earlier ones, but all within the target element.
+Một use case phổ biến là `<Modal>` có thể tái sử dụng, với khả năng nhiều instance hoạt động đồng thời. Với kịch bản này, nhiều `<Teleport>` có thể mount nội dung vào cùng một phần tử đích. Thứ tự là append đơn giản: mount sau sẽ nằm sau mount trước, tất cả trong phần tử đích.
 
 Given the following usage:
 
@@ -197,7 +197,7 @@ The rendered result would be:
 
 ## Deferred Teleport <sup class="vt-badge" data-text="3.5+" /> {#deferred-teleport}
 
-In Vue 3.5 and above, we can use the `defer` prop to defer the target resolving of a Teleport until other parts of the application have mounted. This allows the Teleport to target a container element that is rendered by Vue, but in a later part of the component tree:
+Trong Vue 3.5 trở lên, ta có thể dùng prop `defer` để trì hoãn việc resolve mục tiêu của Teleport cho đến khi các phần khác của ứng dụng được mount. Điều này cho phép Teleport nhắm tới phần tử container do Vue render, nhưng ở phần sâu hơn của cây component:
 
 ```vue-html
 <Teleport defer to="#late-div">...</Teleport>
@@ -206,7 +206,7 @@ In Vue 3.5 and above, we can use the `defer` prop to defer the target resolving 
 <div id="late-div"></div>
 ```
 
-Note that the target element must be rendered in the same mount / update tick with the Teleport - i.e. if the `<div>` is only mounted a second later, the Teleport will still report an error. The defer works similarly to the `mounted` lifecycle hook.
+Lưu ý phần tử đích phải được render trong cùng tick mount/update với Teleport — tức nếu `<div>` được mount chậm hơn, Teleport vẫn báo lỗi. `defer` hoạt động tương tự hook `mounted`.
 
 ---
 

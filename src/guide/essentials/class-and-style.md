@@ -1,6 +1,6 @@
 # Class and Style Bindings {#class-and-style-bindings}
 
-A common need for data binding is manipulating an element's class list and inline styles. Since `class` and `style` are both attributes, we can use `v-bind` to assign them a string value dynamically, much like with other attributes. However, trying to generate those values using string concatenation can be annoying and error-prone. For this reason, Vue provides special enhancements when `v-bind` is used with `class` and `style`. In addition to strings, the expressions can also evaluate to objects or arrays.
+Nhu cầu phổ biến khi data binding là thao tác với danh sách class và inline styles của một phần tử. Vì `class` và `style` đều là attribute, ta có thể dùng `v-bind` để gán giá trị chuỗi cho chúng một cách động, tương tự các attribute khác. Tuy nhiên, cố gắng tạo các giá trị đó bằng nối chuỗi có thể rườm rà và dễ lỗi. Vì vậy, Vue cung cấp các cải tiến đặc biệt khi dùng `v-bind` với `class` và `style`. Ngoài chuỗi, expression cũng có thể trả về object hoặc array.
 
 ## Binding HTML Classes {#binding-html-classes}
 
@@ -14,15 +14,15 @@ A common need for data binding is manipulating an element's class list and inlin
 
 ### Binding to Objects {#binding-to-objects}
 
-We can pass an object to `:class` (short for `v-bind:class`) to dynamically toggle classes:
+Chúng ta có thể truyền một object vào `:class` (viết tắt của `v-bind:class`) để bật/tắt class một cách động:
 
 ```vue-html
 <div :class="{ active: isActive }"></div>
 ```
 
-The above syntax means the presence of the `active` class will be determined by the [truthiness](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) of the data property `isActive`.
+Cú pháp trên có nghĩa sự hiện diện của class `active` sẽ được quyết định bởi [truthiness](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) của thuộc tính dữ liệu `isActive`.
 
-You can have multiple classes toggled by having more fields in the object. In addition, the `:class` directive can also co-exist with the plain `class` attribute. So given the following state:
+Bạn có thể bật/tắt nhiều class bằng cách thêm nhiều field vào object. Ngoài ra, directive `:class` cũng có thể tồn tại cùng attribute `class` thông thường. Với trạng thái sau:
 
 <div class="composition-api">
 

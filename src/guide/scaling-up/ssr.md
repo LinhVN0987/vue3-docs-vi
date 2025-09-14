@@ -8,13 +8,13 @@ outline: deep
 
 ### What is SSR? {#what-is-ssr}
 
-Vue.js is a framework for building client-side applications. By default, Vue components produce and manipulate DOM in the browser as output. However, it is also possible to render the same components into HTML strings on the server, send them directly to the browser, and finally "hydrate" the static markup into a fully interactive app on the client.
+Vue.js là framework để xây dựng ứng dụng phía client. Mặc định, component Vue tạo và thao tác DOM trong trình duyệt. Tuy nhiên, cũng có thể render các component đó thành chuỗi HTML trên server, gửi trực tiếp đến trình duyệt và cuối cùng “hydrate” markup tĩnh thành ứng dụng tương tác đầy đủ ở phía client.
 
-A server-rendered Vue.js app can also be considered "isomorphic" or "universal", in the sense that the majority of your app's code runs on both the server **and** the client.
+Ứng dụng Vue render từ server còn được gọi là "isomorphic" hoặc "universal", vì phần lớn code của bạn chạy ở cả server **và** client.
 
 ### Why SSR? {#why-ssr}
 
-Compared to a client-side Single-Page Application (SPA), the advantage of SSR primarily lies in:
+So với Single‑Page Application (SPA) phía client, ưu điểm của SSR chủ yếu nằm ở:
 
 - **Faster time-to-content**: this is more prominent on slow internet or slow devices. Server-rendered markup doesn't need to wait until all JavaScript has been downloaded and executed to be displayed, so your user will see a fully-rendered page sooner. In addition, data fetching is done on the server-side for the initial visit, which likely has a faster connection to your database than the client. This generally results in improved [Core Web Vitals](https://web.dev/vitals/) metrics, better user experience, and can be critical for applications where time-to-content is directly associated with conversion rate.
 
@@ -26,7 +26,7 @@ Compared to a client-side Single-Page Application (SPA), the advantage of SSR pr
   As of now, Google and Bing can index synchronous JavaScript applications just fine. Synchronous being the key word there. If your app starts with a loading spinner, then fetches content via Ajax, the crawler will not wait for you to finish. This means if you have content fetched asynchronously on pages where SEO is important, SSR might be necessary.
   :::
 
-There are also some trade-offs to consider when using SSR:
+Cũng có một số đánh đổi cần cân nhắc khi dùng SSR:
 
 - Development constraints. Browser-specific code can only be used inside certain lifecycle hooks; some external libraries may need special treatment to be able to run in a server-rendered app.
 
@@ -34,15 +34,15 @@ There are also some trade-offs to consider when using SSR:
 
 - More server-side load. Rendering a full app in Node.js is going to be more CPU-intensive than just serving static files, so if you expect high traffic, be prepared for corresponding server load and wisely employ caching strategies.
 
-Before using SSR for your app, the first question you should ask is whether you actually need it. It mostly depends on how important time-to-content is for your app. For example, if you are building an internal dashboard where an extra few hundred milliseconds on initial load doesn't matter that much, SSR would be an overkill. However, in cases where time-to-content is absolutely critical, SSR can help you achieve the best possible initial load performance.
+Trước khi dùng SSR, hãy tự hỏi liệu bạn thực sự cần nó. Điều này phụ thuộc vào mức độ quan trọng của time‑to‑content đối với ứng dụng. Ví dụ, với dashboard nội bộ nơi chậm thêm vài trăm mili‑giây không đáng kể, SSR có thể là quá tay. Nhưng nếu time‑to‑content là tối quan trọng, SSR giúp đạt hiệu năng tải ban đầu tốt nhất.
 
 ### SSR vs. SSG {#ssr-vs-ssg}
 
-**Static Site Generation (SSG)**, also referred to as pre-rendering, is another popular technique for building fast websites. If the data needed to server-render a page is the same for every user, then instead of rendering the page every time a request comes in, we can render it only once, ahead of time, during the build process. Pre-rendered pages are generated and served as static HTML files.
+**Static Site Generation (SSG)**, còn gọi là pre‑rendering, là kỹ thuật phổ biến khác để xây website nhanh. Nếu dữ liệu cần để render trang trên server là như nhau cho mọi người dùng, thay vì render mỗi lần request, ta có thể render một lần trước (trong quá trình build). Các trang pre‑rendered được tạo và phục vụ dưới dạng file HTML tĩnh.
 
-SSG retains the same performance characteristics of SSR apps: it provides great time-to-content performance. At the same time, it is cheaper and easier to deploy than SSR apps because the output is static HTML and assets. The keyword here is **static**: SSG can only be applied to pages providing static data, i.e. data that is known at build time and can not change between requests. Every time the data changes, a new deployment is needed.
+SSG giữ đặc tính hiệu năng giống SSR: mang lại time‑to‑content rất tốt. Đồng thời rẻ và dễ deploy hơn SSR vì đầu ra là HTML và asset tĩnh. Từ khóa là **tĩnh**: SSG chỉ áp dụng cho trang có dữ liệu tĩnh, tức dữ liệu biết trước lúc build và không thay đổi giữa các request. Mỗi lần dữ liệu đổi, cần deploy mới.
 
-If you're only investigating SSR to improve the SEO of a handful of marketing pages (e.g. `/`, `/about`, `/contact`, etc.), then you probably want SSG instead of SSR. SSG is also great for content-based websites such as documentation sites or blogs. In fact, this website you are reading right now is statically generated using [VitePress](https://vitepress.dev/), a Vue-powered static site generator.
+Nếu bạn xem xét SSR chỉ để cải thiện SEO cho vài trang marketing (ví dụ `/`, `/about`, `/contact`, ...), có lẽ SSG phù hợp hơn SSR. SSG cũng rất hợp cho website nội dung như tài liệu hay blog. Thực tế, website bạn đang đọc được tạo tĩnh bằng [VitePress](https://vitepress.dev/), static site generator dùng Vue.
 
 ## Basic Tutorial {#basic-tutorial}
 

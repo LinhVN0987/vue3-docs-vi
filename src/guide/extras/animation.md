@@ -1,4 +1,4 @@
-<script setup>
+continue with src/guide/quick-start.md next, focusing on conceptual explanations and leaving step-by-step commands/code intact<script setup>
 import ElasticHeader from './demos/ElasticHeader.vue'
 import DisabledButton from './demos/DisabledButton.vue'
 import Colors from './demos/Colors.vue'
@@ -7,11 +7,11 @@ import AnimateWatcher from './demos/AnimateWatcher.vue'
 
 # Animation Techniques {#animation-techniques}
 
-Vue provides the [`<Transition>`](/guide/built-ins/transition) and [`<TransitionGroup>`](/guide/built-ins/transition-group) components for handling enter / leave and list transitions. However, there are many other ways of using animations on the web, even in a Vue application. Here we will discuss a few additional techniques.
+Vue cung cấp [`<Transition>`](/guide/built-ins/transition) và [`<TransitionGroup>`](/guide/built-ins/transition-group) để xử lý enter/leave và chuyển tiếp danh sách. Tuy nhiên, còn nhiều cách dùng animation trên web, kể cả trong ứng dụng Vue. Dưới đây là một số kỹ thuật bổ sung.
 
 ## Class-based Animations {#class-based-animations}
 
-For elements that are not entering / leaving the DOM, we can trigger animations by dynamically adding a CSS class:
+Với phần tử không vào/ra DOM, ta có thể kích hoạt animation bằng cách thêm CSS class động:
 
 <div class="composition-api">
 
@@ -90,7 +90,7 @@ export default {
 
 ## State-driven Animations {#state-driven-animations}
 
-Some transition effects can be applied by interpolating values, for instance by binding a style to an element while an interaction occurs. Take this example for instance:
+Một số hiệu ứng có thể áp dụng bằng cách nội suy giá trị, ví dụ bind style cho phần tử trong khi tương tác diễn ra. Ví dụ:
 
 <div class="composition-api">
 

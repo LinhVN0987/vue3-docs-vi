@@ -1,14 +1,14 @@
 # Accessibility {#accessibility}
 
-Web accessibility (also known as a11y) refers to the practice of creating websites that can be used by anyone — be that a person with a disability, a slow connection, outdated or broken hardware or simply someone in an unfavorable environment. For example, adding subtitles to a video would help both your deaf and hard-of-hearing users and your users who are in a loud environment and can't hear their phone. Similarly, making sure your text isn't too low contrast will help both your low-vision users and your users who are trying to use their phone in bright sunlight.
+Web accessibility (a11y) là thực hành tạo website có thể dùng bởi mọi người — người khuyết tật, kết nối chậm, phần cứng cũ/hỏng hoặc ở môi trường bất lợi. Ví dụ, thêm phụ đề cho video giúp cả người khiếm thính và người đang ở nơi ồn ào không nghe được. Tương tự, đảm bảo văn bản không quá ít tương phản giúp cả người thị lực kém và người dùng dưới ánh nắng mạnh.
 
-Ready to start but aren’t sure where?
+Sẵn sàng bắt đầu nhưng chưa biết từ đâu?
 
-Checkout the [Planning and managing web accessibility guide](https://www.w3.org/WAI/planning-and-managing/) provided by [World Wide Web Consortium (W3C)](https://www.w3.org/)
+Xem [Planning and managing web accessibility guide](https://www.w3.org/WAI/planning-and-managing/) do [World Wide Web Consortium (W3C)](https://www.w3.org/) cung cấp.
 
 ## Skip link {#skip-link}
 
-You should add a link at the top of each page that goes directly to the main content area so users can skip content that is repeated on multiple Web pages.
+Bạn nên thêm một liên kết ở đầu mỗi trang trỏ thẳng tới vùng nội dung chính để người dùng bỏ qua nội dung lặp lại trên nhiều trang.
 
 Typically this is done on the top of `App.vue` as it will be the first focusable element on all your pages:
 
@@ -21,7 +21,7 @@ Typically this is done on the top of `App.vue` as it will be the first focusable
 </ul>
 ```
 
-To hide the link unless it is focused, you can add the following style:
+Để ẩn liên kết trừ khi được focus, thêm style sau:
 
 ```css
 .skip-links {
@@ -44,7 +44,7 @@ To hide the link unless it is focused, you can add the following style:
 }
 ```
 
-Once a user changes route, bring focus back to the very beginning of the page, right before the skip link. This can be achieved by calling focus on the `backToTop` template ref (assuming usage of `vue-router`):
+Khi người dùng đổi route, đưa focus về đầu trang, ngay trước skip link. Có thể thực hiện bằng cách gọi focus trên template ref `backToTop` (giả sử dùng `vue-router`):
 
 <div class="options-api">
 
@@ -86,11 +86,11 @@ watch(
 
 ## Content Structure {#content-structure}
 
-One of the most important pieces of accessibility is making sure that design can support accessible implementation. Design should consider not only color contrast, font selection, text sizing, and language, but also how the content is structured in the application.
+Một phần quan trọng của accessibility là đảm bảo thiết kế hỗ trợ triển khai tiếp cận được. Thiết kế không chỉ cân nhắc tương phản màu, chọn font, cỡ chữ, ngôn ngữ, mà còn cách cấu trúc nội dung trong ứng dụng.
 
 ### Headings {#headings}
 
-Users can navigate an application through headings. Having descriptive headings for every section of your application makes it easier for users to predict the content of each section. When it comes to headings, there are a couple of recommended accessibility practices:
+Người dùng có thể điều hướng qua heading. Có heading mô tả cho mỗi phần giúp dự đoán nội dung dễ hơn. Một số khuyến nghị:
 
 - Nest headings in their ranking order: `<h1>` - `<h6>`
 - Don’t skip headings within a section
@@ -118,7 +118,7 @@ Users can navigate an application through headings. Having descriptive headings 
 
 ### Landmarks {#landmarks}
 
-[Landmarks](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/landmark_role) provide programmatic access to sections within an application. Users who rely on assistive technology can navigate to each section of the application and skip over content. You can use [ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) to help you achieve this.
+[Landmarks](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/landmark_role) cung cấp cách truy cập theo chương trình tới các phần trong ứng dụng. Người dùng dựa vào công nghệ hỗ trợ có thể điều hướng tới từng phần và bỏ qua nội dung. Bạn có thể dùng [ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) để đạt điều này.
 
 | HTML            | ARIA Role            | Landmark Purpose                                                                                                 |
 | --------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -135,7 +135,7 @@ Users can navigate an application through headings. Having descriptive headings 
 
 ## Semantic Forms {#semantic-forms}
 
-When creating a form, you can use the following elements: `<form>`, `<label>`, `<input>`, `<textarea>`, and `<button>`
+Khi tạo biểu mẫu, hãy dùng các phần tử: `<form>`, `<label>`, `<input>`, `<textarea>`, và `<button>`
 
 Labels are typically placed on top or to the left of the form fields:
 
@@ -154,23 +154,23 @@ Labels are typically placed on top or to the left of the form fields:
 </form>
 ```
 
-Notice how you can include `autocomplete='on'` on the form element and it will apply to all inputs in your form. You can also set different [values for autocomplete attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) for each input.
+Lưu ý có thể đặt `autocomplete='on'` trên thẻ form và áp dụng cho tất cả input. Bạn cũng có thể đặt [giá trị autocomplete](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) khác nhau cho từng input.
 
 ### Labels {#labels}
 
-Provide labels to describe the purpose of all form control; linking `for` and `id`:
+Cung cấp label mô tả mục đích của mọi control; liên kết `for` và `id`:
 
 ```vue-html
 <label for="name">Name: </label>
 <input type="text" name="name" id="name" v-model="name" />
 ```
 
-If you inspect this element in your Chrome DevTools and open the Accessibility tab inside the Elements tab, you will see how the input gets its name from the label:
+Nếu bạn kiểm tra phần tử này bằng Chrome DevTools và mở tab Accessibility trong Elements, bạn sẽ thấy input lấy tên từ label thế nào:
 
 ![Chrome Developer Tools showing input accessible name from label](./images/AccessibleLabelChromeDevTools.png)
 
 :::warning Warning:
-Though you might have seen labels wrapping the input fields like this:
+Dù bạn có thể thấy label bao quanh input như sau:
 
 ```vue-html
 <label>
@@ -179,12 +179,12 @@ Though you might have seen labels wrapping the input fields like this:
 </label>
 ```
 
-Explicitly setting the labels with a matching id is better supported by assistive technology.
+Đặt label tường minh với id khớp được công nghệ hỗ trợ hỗ trợ tốt hơn.
 :::
 
 #### `aria-label` {#aria-label}
 
-You can also give the input an accessible name with [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label).
+Bạn cũng có thể đặt tên accessible cho input bằng [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label).
 
 ```vue-html
 <label for="name">Name: </label>
@@ -197,7 +197,7 @@ You can also give the input an accessible name with [`aria-label`](https://devel
 />
 ```
 
-Feel free to inspect this element in Chrome DevTools to see how the accessible name has changed:
+Có thể kiểm tra trong Chrome DevTools để thấy tên accessible thay đổi ra sao:
 
 ![Chrome Developer Tools showing input accessible name from aria-label](./images/AccessibleARIAlabelDevTools.png)
 

@@ -6,11 +6,11 @@
 
 ## Basic Usage {#basic-usage}
 
-`v-model` can be used on a component to implement a two-way binding.
+`v-model` có thể dùng trên component để triển khai two‑way binding.
 
 <div class="composition-api">
 
-Starting in Vue 3.4, the recommended approach to achieve this is using the [`defineModel()`](/api/sfc-script-setup#definemodel) macro:
+Bắt đầu từ Vue 3.4, cách khuyến nghị để làm điều này là dùng macro [`defineModel()`](/api/sfc-script-setup#definemodel):
 
 ```vue [Child.vue]
 <script setup>
@@ -27,18 +27,18 @@ function update() {
 </template>
 ```
 
-The parent can then bind a value with `v-model`:
+Parent có thể bind một giá trị bằng `v-model`:
 
 ```vue-html [Parent.vue]
 <Child v-model="countModel" />
 ```
 
-The value returned by `defineModel()` is a ref. It can be accessed and mutated like any other ref, except that it acts as a two-way binding between a parent value and a local one:
+Giá trị trả về từ `defineModel()` là một ref. Có thể truy cập và thay đổi như các ref khác, ngoại trừ việc nó đóng vai trò two‑way binding giữa giá trị ở parent và giá trị cục bộ:
 
-- Its `.value` is synced with the value bound by the parent `v-model`;
-- When it is mutated by the child, it causes the parent bound value to be updated as well.
+- `.value` của nó được đồng bộ với giá trị do `v-model` ở parent bind;
+- Khi bị child thay đổi, nó cũng cập nhật giá trị được bind ở parent.
 
-This means you can also bind this ref to a native input element with `v-model`, making it straightforward to wrap native input elements while providing the same `v-model` usage:
+Điều này có nghĩa bạn cũng có thể bind ref này vào phần tử input gốc với `v-model`, giúp bao bọc input gốc mà vẫn cung cấp cách dùng `v-model` tương tự:
 
 ```vue
 <script setup>
@@ -54,12 +54,12 @@ const model = defineModel()
 
 ### Under the Hood {#under-the-hood}
 
-`defineModel` is a convenience macro. The compiler expands it to the following:
+`defineModel` là một convenience macro. Trình biên dịch mở rộng nó thành:
 
-- A prop named `modelValue`, which the local ref's value is synced with;
-- An event named `update:modelValue`, which is emitted when the local ref's value is mutated.
+- Một prop tên `modelValue`, mà giá trị của ref cục bộ được đồng bộ với nó;
+- Một event tên `update:modelValue`, được emit khi giá trị ref cục bộ thay đổi.
 
-This is how you would implement the same child component shown above prior to 3.4:
+Đây là cách bạn sẽ triển khai cùng component con ở trên trước phiên bản 3.4:
 
 ```vue [Child.vue]
 <script setup>
@@ -75,7 +75,7 @@ const emit = defineEmits(['update:modelValue'])
 </template>
 ```
 
-Then, `v-model="foo"` in the parent component will be compiled to:
+Sau đó, `v-model="foo"` trong parent component sẽ được biên dịch thành:
 
 ```vue-html [Parent.vue]
 <Child
@@ -84,9 +84,9 @@ Then, `v-model="foo"` in the parent component will be compiled to:
 />
 ```
 
-As you can see, it is quite a bit more verbose. However, it is helpful to understand what is happening under the hood.
+Như bạn thấy, cách này dài dòng hơn khá nhiều. Tuy nhiên, hiểu cách hoạt động bên dưới vẫn rất hữu ích.
 
-Because `defineModel` declares a prop, you can therefore declare the underlying prop's options by passing it to `defineModel`:
+Vì `defineModel` khai báo một prop, nên bạn có thể khai báo các tùy chọn cho prop nền tảng bằng cách truyền chúng vào `defineModel`:
 
 ```js
 // making the v-model required
@@ -97,7 +97,7 @@ const model = defineModel({ default: 0 })
 ```
 
 :::warning
-If you have a `default` value for `defineModel` prop and you don't provide any value for this prop from the parent component, it can cause a de-synchronization between parent and child components. In the example below, the parent's `myRef` is undefined, but the child's `model` is 1:
+Nếu bạn đặt `default` cho prop của `defineModel` và không truyền giá trị nào từ parent, điều này có thể gây mất đồng bộ giữa parent và child. Trong ví dụ dưới đây, `myRef` của parent là undefined, nhưng `model` của child là 1:
 
 ```vue [Child.vue]
 <script setup>
@@ -121,13 +121,13 @@ const myRef = ref()
 
 <div class="options-api">
 
-First let's revisit how `v-model` is used on a native element:
+Trước tiên, cùng ôn lại cách `v-model` dùng trên phần tử gốc:
 
 ```vue-html
 <input v-model="searchText" />
 ```
 
-Under the hood, the template compiler expands `v-model` to the more verbose equivalent for us. So the above code does the same as the following:
+Bên dưới, template compiler mở rộng `v-model` thành dạng tương đương dài hơn. Vì vậy, đoạn code trên tương đương với:
 
 ```vue-html
 <input
@@ -136,7 +136,7 @@ Under the hood, the template compiler expands `v-model` to the more verbose equi
 />
 ```
 
-When used on a component, `v-model` instead expands to this:
+Khi dùng trên component, `v-model` sẽ được mở rộng thành:
 
 ```vue-html
 <CustomInput
@@ -145,12 +145,12 @@ When used on a component, `v-model` instead expands to this:
 />
 ```
 
-For this to actually work though, the `<CustomInput>` component must do two things:
+Để hoạt động, component `<CustomInput>` phải làm hai việc:
 
-1. Bind the `value` attribute of a native `<input>` element to the `modelValue` prop
-2. When a native `input` event is triggered, emit an `update:modelValue` custom event with the new value
+1. Bind thuộc tính `value` của `<input>` gốc tới prop `modelValue`
+2. Khi `input` event gốc được kích hoạt, emit custom event `update:modelValue` với giá trị mới
 
-Here's that in action:
+Ví dụ minh họa:
 
 ```vue [CustomInput.vue]
 <script>
@@ -168,7 +168,7 @@ export default {
 </template>
 ```
 
-Now `v-model` should work perfectly with this component:
+Giờ `v-model` sẽ hoạt động hoàn hảo với component này:
 
 ```vue-html
 <CustomInput v-model="searchText" />
@@ -176,7 +176,7 @@ Now `v-model` should work perfectly with this component:
 
 [Try it in the Playground](https://play.vuejs.org/#eNqFkctqwzAQRX9lEAEn4Np744aWrvoD3URdiHiSGvRCHpmC8b93JDfGKYGCkJjXvTrSJF69r8aIohHtcA69p6O0vfEuELzFgZx5tz4SXIIzUFT1JpfGCmmlxe/c3uFFRU0wSQtwdqxh0dLQwHSnNJep3ilS+8PSCxCQYrC3CMDgMKgrNlB8odaOXVJ2TgdvvNp6vSwHhMZrRcgRQLs1G5+M61A/S/ErKQXUR5immwXMWW1VEKX4g3j3Mo9QfXCeKU9FtvpQmp/lM0Oi6RP/qYieebHZNvyL0acLLODNmGYSxCogxVJ6yW1c2iWz/QOnEnY48kdUpMIVGSllD8t8zVZb+PkHqPG4iw==)
 
-Another way of implementing `v-model` within this component is to use a writable `computed` property with both a getter and a setter. The `get` method should return the `modelValue` property and the `set` method should emit the corresponding event:
+Một cách khác để triển khai `v-model` trong component này là dùng `computed` có thể ghi với cả getter và setter. Phương thức `get` trả về thuộc tính `modelValue` và phương thức `set` sẽ emit event tương ứng:
 
 ```vue [CustomInput.vue]
 <script>

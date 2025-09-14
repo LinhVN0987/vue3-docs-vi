@@ -2,7 +2,7 @@
 
 ## Introduction {#introduction}
 
-Plugins are self-contained code that usually add app-level functionality to Vue. This is how we install a plugin:
+Plugin là đoạn mã tự chứa thường bổ sung chức năng cấp ứng dụng cho Vue. Cách cài plugin:
 
 ```js
 import { createApp } from 'vue'
@@ -14,7 +14,7 @@ app.use(myPlugin, {
 })
 ```
 
-A plugin is defined as either an object that exposes an `install()` method, or simply a function that acts as the install function itself. The install function receives the [app instance](/api/application) along with additional options passed to `app.use()`, if any:
+Plugin được định nghĩa hoặc là object có phương thức `install()`, hoặc đơn giản là một hàm đóng vai trò hàm cài đặt. Hàm install nhận [app instance](/api/application) và các tùy chọn truyền cho `app.use()` (nếu có):
 
 ```js
 const myPlugin = {
@@ -24,7 +24,7 @@ const myPlugin = {
 }
 ```
 
-There is no strictly defined scope for a plugin, but common scenarios where plugins are useful include:
+Không có phạm vi bắt buộc cho plugin, nhưng các tình huống phổ biến hữu ích gồm:
 
 1. Register one or more global components or custom directives with [`app.component()`](/api/application#app-component) and [`app.directive()`](/api/application#app-directive).
 
@@ -36,9 +36,9 @@ There is no strictly defined scope for a plugin, but common scenarios where plug
 
 ## Writing a Plugin {#writing-a-plugin}
 
-In order to better understand how to create your own Vue.js plugins, we will create a very simplified version of a plugin that displays `i18n` (short for [Internationalization](https://en.wikipedia.org/wiki/Internationalization_and_localization)) strings.
+Để hiểu cách tạo plugin Vue.js của riêng bạn, ta sẽ tạo phiên bản đơn giản của plugin hiển thị chuỗi `i18n` (viết tắt của [Internationalization](https://en.wikipedia.org/wiki/Internationalization_and_localization)).
 
-Let's begin by setting up the plugin object. It is recommended to create it in a separate file and export it, as shown below to keep the logic contained and separate.
+Bắt đầu bằng việc tạo object plugin. Nên đặt trong file riêng và export như dưới để tách bạch logic.
 
 ```js [plugins/i18n.js]
 export default {
@@ -48,13 +48,13 @@ export default {
 }
 ```
 
-We want to create a translation function. This function will receive a dot-delimited `key` string, which we will use to look up the translated string in the user-provided options. This is the intended usage in templates:
+Ta muốn tạo hàm dịch. Hàm này nhận chuỗi `key` phân tách bằng dấu chấm, dùng để tra chuỗi dịch trong options do người dùng cung cấp. Cách dùng trong template:
 
 ```vue-html
 <h1>{{ $translate('greetings.hello') }}</h1>
 ```
 
-Since this function should be globally available in all templates, we will make it so by attaching it to `app.config.globalProperties` in our plugin:
+Vì hàm này cần khả dụng toàn cục trong mọi template, ta gắn nó vào `app.config.globalProperties` trong plugin:
 
 ```js{3-10} [plugins/i18n.js]
 export default {
@@ -71,9 +71,9 @@ export default {
 }
 ```
 
-Our `$translate` function will take a string such as `greetings.hello`, look inside the user provided configuration and return the translated value.
+Hàm `$translate` nhận chuỗi như `greetings.hello`, tra trong cấu hình người dùng cung cấp và trả về giá trị dịch.
 
-The object containing the translated keys should be passed to the plugin during installation via additional parameters to `app.use()`:
+Object chứa các khóa dịch nên được truyền vào plugin lúc cài đặt qua tham số bổ sung cho `app.use()`:
 
 ```js
 import i18nPlugin from './plugins/i18n'

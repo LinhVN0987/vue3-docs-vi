@@ -2,7 +2,7 @@
 
 ## What is State Management? {#what-is-state-management}
 
-Technically, every Vue component instance already "manages" its own reactive state. Take a simple counter component as an example:
+Về mặt kỹ thuật, mỗi component instance của Vue đã "quản lý" state reactive của riêng nó. Lấy ví dụ component counter đơn giản:
 
 <div class="composition-api">
 
@@ -50,34 +50,34 @@ export default {
 
 </div>
 
-It is a self-contained unit with the following parts:
+Đây là một đơn vị tự chứa với các phần:
 
-- The **state**, the source of truth that drives our app;
-- The **view**, a declarative mapping of the **state**;
-- The **actions**, the possible ways the state could change in reaction to user inputs from the **view**.
+- **state**: nguồn sự thật điều khiển ứng dụng;
+- **view**: ánh xạ khai báo từ **state**;
+- **actions**: các cách state có thể thay đổi để phản ứng với input người dùng từ **view**.
 
-This is a simple representation of the concept of "one-way data flow":
+Đây là biểu diễn đơn giản của khái niệm "one‑way data flow":
 
 <p style="text-align: center">
   <img alt="state flow diagram" src="./images/state-flow.png" width="252px" style="margin: 40px auto">
 </p>
 
-However, the simplicity starts to break down when we have **multiple components that share a common state**:
+Tuy nhiên sự đơn giản bắt đầu sụp đổ khi có **nhiều component chia sẻ chung một state**:
 
-1. Multiple views may depend on the same piece of state.
-2. Actions from different views may need to mutate the same piece of state.
+1. Nhiều view có thể phụ thuộc cùng một phần state.
+2. Actions từ các view khác nhau có thể cần mutate cùng một phần state.
 
-For case one, a possible workaround is by "lifting" the shared state up to a common ancestor component, and then pass it down as props. However, this quickly gets tedious in component trees with deep hierarchies, leading to another problem known as [Prop Drilling](/guide/components/provide-inject#prop-drilling).
+Với trường hợp thứ nhất, có thể "nâng" state dùng chung lên ancestor chung và truyền xuống qua props. Tuy nhiên, điều này nhanh chóng trở nên mệt mỏi trong cây component sâu, dẫn đến vấn đề [Prop Drilling](/guide/components/provide-inject#prop-drilling).
 
-For case two, we often find ourselves resorting to solutions such as reaching for direct parent / child instances via template refs, or trying to mutate and synchronize multiple copies of the state via emitted events. Both of these patterns are brittle and quickly lead to unmaintainable code.
+Với trường hợp thứ hai, ta thường dùng các giải pháp như thao tác trực tiếp parent/child qua template ref, hoặc cố mutate và đồng bộ nhiều bản sao state qua event emit. Cả hai đều mong manh và nhanh chóng dẫn đến code khó bảo trì.
 
-A simpler and more straightforward solution is to extract the shared state out of the components, and manage it in a global singleton. With this, our component tree becomes a big "view", and any component can access the state or trigger actions, no matter where they are in the tree!
+Giải pháp đơn giản hơn là tách state dùng chung ra khỏi component và quản lý nó trong một singleton toàn cục. Khi đó cây component trở thành một "view" lớn, và bất kỳ component nào cũng có thể truy cập state hoặc kích hoạt action, bất kể ở đâu trong cây!
 
 ## Simple State Management with Reactivity API {#simple-state-management-with-reactivity-api}
 
 <div class="options-api">
 
-In Options API, reactive data is declared using the `data()` option. Internally, the object returned by `data()` is made reactive via the [`reactive()`](/api/reactivity-core#reactive) function, which is also available as a public API.
+Trong Options API, dữ liệu reactive được khai báo bằng `data()`. Nội bộ, object trả về từ `data()` được làm reactive qua hàm [`reactive()`](/api/reactivity-core#reactive), cũng là public API.
 
 </div>
 
@@ -146,9 +146,9 @@ export default {
 
 </div>
 
-Now whenever the `store` object is mutated, both `<ComponentA>` and `<ComponentB>` will update their views automatically - we have a single source of truth now.
+Giờ bất cứ khi nào object `store` bị mutate, cả `<ComponentA>` và `<ComponentB>` sẽ tự động cập nhật view — ta đã có một nguồn sự thật duy nhất.
 
-However, this also means any component importing `store` can mutate it however they want:
+Tuy nhiên, điều này cũng có nghĩa bất kỳ component nào import `store` đều có thể mutate nó tùy ý:
 
 ```vue-html{2}
 <template>
@@ -158,7 +158,7 @@ However, this also means any component importing `store` can mutate it however t
 </template>
 ```
 
-While this works in simple cases, global state that can be arbitrarily mutated by any component is not going to be very maintainable in the long run. To ensure the state-mutating logic is centralized like the state itself, it is recommended to define methods on the store with names that express the intention of the actions:
+Mặc dù hoạt động trong trường hợp đơn giản, state toàn cục có thể bị mutate tùy ý sẽ khó bảo trì về lâu dài. Để đảm bảo logic mutate state được tập trung giống như state, nên định nghĩa các method trên store với tên thể hiện rõ mục đích của action:
 
 ```js{5-7} [store.js]
 import { reactive } from 'vue'
@@ -191,10 +191,10 @@ export const store = reactive({
 </div>
 
 :::tip
-Note the click handler uses `store.increment()` with parentheses - this is necessary to call the method with the proper `this` context since it's not a component method.
+Lưu ý click handler dùng `store.increment()` có dấu ngoặc — cần thiết để gọi method với ngữ cảnh `this` đúng vì đây không phải method của component.
 :::
 
-Although here we are using a single reactive object as a store, you can also share reactive state created using other [Reactivity APIs](/api/reactivity-core) such as `ref()` or `computed()`, or even return global state from a [Composable](/guide/reusability/composables):
+Mặc dù ở đây dùng một reactive object làm store, bạn cũng có thể chia sẻ state reactive tạo bởi các [Reactivity API](/api/reactivity-core) khác như `ref()` hoặc `computed()`, hoặc thậm chí trả về state toàn cục từ một [Composable](/guide/reusability/composables):
 
 ```js
 import { ref } from 'vue'
@@ -213,25 +213,25 @@ export function useCount() {
 }
 ```
 
-The fact that Vue's reactivity system is decoupled from the component model makes it extremely flexible.
+Việc hệ thống reactivity của Vue tách rời khỏi mô hình component khiến nó cực kỳ linh hoạt.
 
 ## SSR Considerations {#ssr-considerations}
 
-If you are building an application that leverages [Server-Side Rendering (SSR)](./ssr), the above pattern can lead to issues due to the store being a singleton shared across multiple requests. This is discussed in [more details](./ssr#cross-request-state-pollution) in the SSR guide.
+Nếu bạn xây dựng ứng dụng dùng [Server‑Side Rendering (SSR)](./ssr), mẫu trên có thể gây vấn đề do store là singleton dùng chung giữa nhiều request. Điều này được bàn [chi tiết hơn](./ssr#cross-request-state-pollution) trong hướng dẫn SSR.
 
 ## Pinia {#pinia}
 
-While our hand-rolled state management solution will suffice in simple scenarios, there are many more things to consider in large-scale production applications:
+Mặc dù giải pháp tự viết đủ dùng trong bối cảnh đơn giản, còn nhiều điều cần cân nhắc ở ứng dụng production quy mô lớn:
 
 - Stronger conventions for team collaboration
 - Integrating with the Vue DevTools, including timeline, in-component inspection, and time-travel debugging
 - Hot Module Replacement
 - Server-Side Rendering support
 
-[Pinia](https://pinia.vuejs.org) is a state management library that implements all of the above. It is maintained by the Vue core team, and works with both Vue 2 and Vue 3.
+[Pinia](https://pinia.vuejs.org) là thư viện quản lý state hiện thực tất cả số trên. Nó được team core Vue duy trì, và hoạt động với cả Vue 2 lẫn Vue 3.
 
-Existing users may be familiar with [Vuex](https://vuex.vuejs.org/), the previous official state management library for Vue. With Pinia serving the same role in the ecosystem, Vuex is now in maintenance mode. It still works, but will no longer receive new features. It is recommended to use Pinia for new applications.
+Người dùng hiện tại có thể quen với [Vuex](https://vuex.vuejs.org/), thư viện quản lý state chính thức trước đây. Với Pinia đảm nhận vai trò tương tự trong hệ sinh thái, Vuex nay ở chế độ bảo trì. Nó vẫn hoạt động nhưng không nhận tính năng mới. Khuyến nghị dùng Pinia cho ứng dụng mới.
 
-Pinia started out as an exploration of what the next iteration of Vuex could look like, incorporating many ideas from core team discussions for Vuex 5. Eventually, we realized that Pinia already implements most of what we wanted in Vuex 5, and decided to make it the new recommendation instead.
+Pinia bắt đầu như một thử nghiệm cho thế hệ kế tiếp của Vuex, tích hợp nhiều ý tưởng từ các thảo luận về Vuex 5. Cuối cùng, chúng tôi nhận ra Pinia đã hiện thực phần lớn những gì mong muốn ở Vuex 5, và quyết định đưa nó thành khuyến nghị mới.
 
-Compared to Vuex, Pinia provides a simpler API with less ceremony, offers Composition-API-style APIs, and most importantly, has solid type inference support when used with TypeScript.
+So với Vuex, Pinia có API đơn giản hơn, “ít nghi thức” hơn, cung cấp API theo phong cách Composition API, và quan trọng nhất, hỗ trợ suy luận kiểu vững chắc khi dùng với TypeScript.

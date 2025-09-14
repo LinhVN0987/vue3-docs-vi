@@ -97,7 +97,7 @@ If you are looking for a lighter-weight alternative for no-build-step usage, che
 
 ## Browser Devtools {#browser-devtools}
 
-The Vue browser devtools extension allows you to explore a Vue app's component tree, inspect the state of individual components, track state management events, and profile performance.
+Extension devtools của Vue cho phép bạn khám phá cây component của ứng dụng, xem state từng component, theo dõi sự kiện quản lý state, và profiling hiệu năng.
 
 ![devtools screenshot](./images/devtools.png)
 
@@ -108,7 +108,7 @@ The Vue browser devtools extension allows you to explore a Vue app's component t
 
 ## TypeScript {#typescript}
 
-Main article: [Using Vue with TypeScript](/guide/typescript/overview).
+Bài chính: [Using Vue with TypeScript](/guide/typescript/overview).
 
 - [Vue - Official extension](https://github.com/vuejs/language-tools) provides type checking for SFCs using `<script lang="ts">` blocks, including template expressions and cross-component props validation.
 
@@ -116,7 +116,7 @@ Main article: [Using Vue with TypeScript](/guide/typescript/overview).
 
 ## Testing {#testing}
 
-Main article: [Testing Guide](/guide/scaling-up/testing).
+Bài chính: [Testing Guide](/guide/scaling-up/testing).
 
 - [Cypress](https://www.cypress.io/) is recommended for E2E tests. It can also be used for component testing for Vue SFCs via the [Cypress Component Test Runner](https://docs.cypress.io/guides/component-testing/introduction).
 
@@ -126,9 +126,9 @@ Main article: [Testing Guide](/guide/scaling-up/testing).
 
 ## Linting {#linting}
 
-The Vue team maintains [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue), an [ESLint](https://eslint.org/) plugin that supports SFC-specific linting rules.
+Nhóm Vue duy trì [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue), plugin [ESLint](https://eslint.org/) hỗ trợ rule lint dành riêng cho SFC.
 
-Users previously using Vue CLI may be used to having linters configured via webpack loaders. However when using a Vite-based build setup, our general recommendation is:
+Người dùng Vue CLI trước đây có thể quen cấu hình linter qua webpack loader. Tuy nhiên với build setup dựa trên Vite, khuyến nghị chung là:
 
 1. `npm install -D eslint eslint-plugin-vue`, then follow `eslint-plugin-vue`'s [configuration guide](https://eslint.vuejs.org/user-guide/#usage).
 

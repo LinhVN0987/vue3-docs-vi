@@ -1,18 +1,18 @@
 # Template Refs {#template-refs}
 
-While Vue's declarative rendering model abstracts away most of the direct DOM operations for you, there may still be cases where we need direct access to the underlying DOM elements. To achieve this, we can use the special `ref` attribute:
+Mô hình render khai báo của Vue giúp bạn không phải can thiệp trực tiếp vào DOM trong hầu hết trường hợp, nhưng đôi khi ta vẫn cần truy cập trực tiếp vào DOM element bên dưới. Để làm điều đó, ta có thể dùng thuộc tính đặc biệt `ref`:
 
 ```vue-html
 <input ref="input">
 ```
 
-`ref` is a special attribute, similar to the `key` attribute discussed in the `v-for` chapter. It allows us to obtain a direct reference to a specific DOM element or child component instance after it's mounted. This may be useful when you want to, for example, programmatically focus an input on component mount, or initialize a 3rd party library on an element.
+`ref` là một thuộc tính đặc biệt, tương tự thuộc tính `key` đã đề cập trong chương `v-for`. Nó cho phép ta nhận được tham chiếu trực tiếp tới một DOM element cụ thể hoặc instance của child component sau khi nó được mount. Điều này hữu ích khi bạn muốn, chẳng hạn, focus một input bằng code khi component mount, hoặc khởi tạo thư viện bên thứ ba trên một phần tử.
 
 ## Accessing the Refs {#accessing-the-refs}
 
 <div class="composition-api">
 
-To obtain the reference with Composition API, we can use the [`useTemplateRef()`](/api/composition-api-helpers#usetemplateref) <sup class="vt-badge" data-text="3.5+" /> helper:
+Để lấy tham chiếu với Composition API, ta có thể dùng helper [`useTemplateRef()`](/api/composition-api-helpers#usetemplateref) <sup class="vt-badge" data-text="3.5+" />:
 
 ```vue
 <script setup>
@@ -31,7 +31,7 @@ onMounted(() => {
 </template>
 ```
 
-When using TypeScript, Vue's IDE support and `vue-tsc` will automatically infer the type of `input.value` based on what element or component the matching `ref` attribute is used on.
+Khi dùng TypeScript, hỗ trợ IDE của Vue và `vue-tsc` sẽ tự động suy ra kiểu của `input.value` dựa trên phần tử hoặc component mà `ref` tương ứng được dùng.
 
 <details>
 <summary>Usage before 3.5</summary>
@@ -75,7 +75,7 @@ export default {
 </div>
 <div class="options-api">
 
-The resulting ref is exposed on `this.$refs`:
+Ref thu được sẽ xuất hiện trên `this.$refs`:
 
 ```vue
 <script>
@@ -93,11 +93,11 @@ export default {
 
 </div>
 
-Note that you can only access the ref **after the component is mounted.** If you try to access <span class="options-api">`$refs.input`</span><span class="composition-api">`input`</span> in a template expression, it will be <span class="options-api">`undefined`</span><span class="composition-api">`null`</span> on the first render. This is because the element doesn't exist until after the first render!
+Lưu ý bạn chỉ có thể truy cập ref **sau khi component đã mount.** Nếu bạn thử truy cập <span class="options-api">`$refs.input`</span><span class="composition-api">`input`</span> trong biểu thức template, nó sẽ là <span class="options-api">`undefined`</span><span class="composition-api">`null`</span> ở lần render đầu tiên. Vì phần tử đó chưa tồn tại cho đến sau lần render đầu tiên!
 
 <div class="composition-api">
 
-If you are trying to watch the changes of a template ref, make sure to account for the case where the ref has `null` value:
+Nếu bạn muốn watch sự thay đổi của một template ref, hãy đảm bảo xử lý trường hợp ref có giá trị `null`:
 
 ```js
 watchEffect(() => {
@@ -109,15 +109,15 @@ watchEffect(() => {
 })
 ```
 
-See also: [Typing Template Refs](/guide/typescript/composition-api#typing-template-refs) <sup class="vt-badge ts" />
+Xem thêm: [Typing Template Refs](/guide/typescript/composition-api#typing-template-refs) <sup class="vt-badge ts" />
 
 </div>
 
 ## Ref on Component {#ref-on-component}
 
-> This section assumes knowledge of [Components](/guide/essentials/component-basics). Feel free to skip it and come back later.
+> Phần này giả định bạn đã biết về [Components](/guide/essentials/component-basics). Có thể bỏ qua và quay lại sau.
 
-`ref` can also be used on a child component. In this case the reference will be that of a component instance:
+`ref` cũng có thể dùng trên child component. Khi đó tham chiếu sẽ là instance của component:
 
 <div class="composition-api">
 

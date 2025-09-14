@@ -4,17 +4,17 @@
   Watch an interactive video lesson on Scrimba
 </ScrimbaLink>
 
-Components allow us to split the UI into independent and reusable pieces, and think about each piece in isolation. It's common for an app to be organized into a tree of nested components:
+Component cho phép chúng ta tách UI thành các phần độc lập, có thể tái sử dụng, và suy nghĩ về từng phần một cách tách biệt. Ứng dụng thường được tổ chức thành một cây các component lồng nhau:
 
 ![Component Tree](./images/components.png)
 
 <!-- https://www.figma.com/file/qa7WHDQRWuEZNRs7iZRZSI/components -->
 
-This is very similar to how we nest native HTML elements, but Vue implements its own component model that allows us to encapsulate custom content and logic in each component. Vue also plays nicely with native Web Components. If you are curious about the relationship between Vue Components and native Web Components, [read more here](/guide/extras/web-components).
+Điều này rất giống cách chúng ta lồng các phần tử HTML gốc, nhưng Vue triển khai mô hình component của riêng mình, cho phép đóng gói nội dung và logic tùy chỉnh trong mỗi component. Vue cũng hoạt động tốt với Web Components gốc. Nếu bạn tò mò về mối quan hệ giữa Vue Components và Web Components gốc, [xem thêm tại đây](/guide/extras/web-components).
 
 ## Defining a Component {#defining-a-component}
 
-When using a build step, we typically define each Vue component in a dedicated file using the `.vue` extension - known as a [Single-File Component](/guide/scaling-up/sfc) (SFC for short):
+Khi dùng build step, ta thường định nghĩa mỗi Vue component trong một file riêng với phần mở rộng `.vue` — gọi là [Single‑File Component](/guide/scaling-up/sfc) (viết tắt SFC):
 
 <div class="options-api">
 
@@ -51,7 +51,7 @@ const count = ref(0)
 
 </div>
 
-When not using a build step, a Vue component can be defined as a plain JavaScript object containing Vue-specific options:
+Khi không dùng build step, một Vue component có thể được định nghĩa như một JavaScript object thuần chứa các tùy chọn đặc thù của Vue:
 
 <div class="options-api">
 
@@ -91,17 +91,17 @@ export default {
 
 </div>
 
-The template is inlined as a JavaScript string here, which Vue will compile on the fly. You can also use an ID selector pointing to an element (usually native `<template>` elements) - Vue will use its content as the template source.
+Template ở đây được viết inline dưới dạng chuỗi JavaScript, và Vue sẽ biên dịch ngay khi chạy. Bạn cũng có thể dùng một ID selector trỏ đến một phần tử (thường là phần tử `<template>` gốc) — Vue sẽ dùng nội dung của nó làm nguồn template.
 
-The example above defines a single component and exports it as the default export of a `.js` file, but you can use named exports to export multiple components from the same file.
+Ví dụ trên định nghĩa một component và export nó làm default export của file `.js`, nhưng bạn cũng có thể dùng named export để export nhiều component từ cùng một file.
 
 ## Using a Component {#using-a-component}
 
 :::tip
-We will be using SFC syntax for the rest of this guide - the concepts around components are the same regardless of whether you are using a build step or not. The [Examples](/examples/) section shows component usage in both scenarios.
+Chúng ta sẽ dùng cú pháp SFC cho phần còn lại của hướng dẫn — các khái niệm về component là như nhau dù bạn có dùng build step hay không. Phần [Examples](/examples/) cho thấy cách dùng component trong cả hai bối cảnh.
 :::
 
-To use a child component, we need to import it in the parent component. Assuming we placed our counter component inside a file called `ButtonCounter.vue`, the component will be exposed as the file's default export:
+Để dùng một child component, ta cần import nó trong parent component. Giả sử ta đặt component counter trong file `ButtonCounter.vue`, component sẽ được export mặc định từ file đó:
 
 <div class="options-api">
 
@@ -122,7 +122,7 @@ export default {
 </template>
 ```
 
-To expose the imported component to our template, we need to [register](/guide/components/registration) it with the `components` option. The component will then be available as a tag using the key it is registered under.
+Để dùng component đã import trong template, ta cần [đăng ký](/guide/components/registration) nó với tùy chọn `components`. Sau đó component sẽ khả dụng dưới dạng một thẻ với key đã đăng ký.
 
 </div>
 
@@ -139,13 +139,13 @@ import ButtonCounter from './ButtonCounter.vue'
 </template>
 ```
 
-With `<script setup>`, imported components are automatically made available to the template.
+Với `<script setup>`, các component được import sẽ tự động khả dụng trong template.
 
 </div>
 
-It's also possible to globally register a component, making it available to all components in a given app without having to import it. The pros and cons of global vs. local registration is discussed in the dedicated [Component Registration](/guide/components/registration) section.
+Cũng có thể đăng ký component ở phạm vi toàn cục, khiến nó khả dụng trong mọi component của ứng dụng mà không cần import. Ưu/nhược điểm của đăng ký toàn cục so với cục bộ được bàn trong phần [Component Registration](/guide/components/registration).
 
-Components can be reused as many times as you want:
+Component có thể được tái sử dụng bao nhiêu lần tùy ý:
 
 ```vue-html
 <h1>Here are many child components!</h1>

@@ -29,19 +29,19 @@ import { VTCodeGroup, VTCodeGroupTab } from '@vue/theme'
 
 ## Why Test? {#why-test}
 
-Automated tests help you and your team build complex Vue applications quickly and confidently by preventing regressions and encouraging you to break apart your application into testable functions, modules, classes, and components. As with any application, your new Vue app can break in many ways, and it's important that you can catch these issues and fix them before releasing.
+Kiểm thử tự động giúp bạn và đội ngũ xây dựng ứng dụng Vue phức tạp nhanh và tự tin hơn bằng cách ngăn hồi quy và khuyến khích tách ứng dụng thành các hàm, module, lớp và component có thể kiểm thử. Giống mọi ứng dụng, app Vue mới có thể hỏng theo nhiều cách, và điều quan trọng là bạn phát hiện và sửa trước khi phát hành.
 
-In this guide, we'll cover basic terminology and provide our recommendations on which tools to choose for your Vue 3 application.
+Trong hướng dẫn này, chúng tôi đề cập thuật ngữ cơ bản và đưa ra khuyến nghị về công cụ cho ứng dụng Vue 3 của bạn.
 
-There is one Vue-specific section covering composables. See [Testing Composables](#testing-composables) below for more details.
+Có một phần riêng liên quan Vue nói về composable. Xem [Testing Composables](#testing-composables) bên dưới.
 
 ## When to Test {#when-to-test}
 
-Start testing early! We recommend you begin writing tests as soon as you can. The longer you wait to add tests to your application, the more dependencies your application will have, and the harder it will be to start.
+Bắt đầu kiểm thử sớm! Hãy viết test càng sớm càng tốt. Bạn càng chờ lâu, ứng dụng càng có nhiều phụ thuộc, và càng khó bắt đầu.
 
 ## Testing Types {#testing-types}
 
-When designing your Vue application's testing strategy, you should leverage the following testing types:
+Khi thiết kế chiến lược kiểm thử cho ứng dụng Vue, bạn nên tận dụng các loại kiểm thử sau:
 
 - **Unit**: Checks that inputs to a given function, class, or composable are producing the expected output or side effects.
 - **Component**: Checks that your component mounts, renders, can be interacted with, and behaves as expected. These tests import more code than unit tests, are more complex, and require more time to execute.
@@ -51,13 +51,13 @@ Each testing type plays a role in your application's testing strategy, and each 
 
 ## Overview {#overview}
 
-We will briefly discuss what each of these are, how they can be implemented for Vue applications, and provide some general recommendations.
+Chúng ta sẽ bàn ngắn gọn từng loại, cách triển khai cho ứng dụng Vue, và một số khuyến nghị chung.
 
 ## Unit Testing {#unit-testing}
 
-Unit tests are written to verify that small, isolated units of code are working as expected. A unit test usually covers a single function, class, composable, or module. Unit tests focus on logical correctness and only concern themselves with a small portion of the application's overall functionality. They may mock large parts of your application's environment (e.g. initial state, complex classes, 3rd party modules, and network requests).
+Unit test dùng để xác minh các đơn vị nhỏ, độc lập của code hoạt động đúng. Thường bao phủ một hàm, lớp, composable, hoặc module. Unit test tập trung vào tính đúng đắn logic và chỉ quan tâm một phần nhỏ chức năng tổng thể. Chúng có thể mock phần lớn môi trường ứng dụng (ví dụ state khởi tạo, lớp phức tạp, module bên thứ ba, và request mạng).
 
-In general, unit tests will catch issues with a function's business logic and logical correctness.
+Nhìn chung, unit test bắt lỗi logic nghiệp vụ và tính đúng đắn logic của hàm.
 
 Take for example this `increment` function:
 
@@ -70,9 +70,9 @@ export function increment(current, max = 10) {
 }
 ```
 
-Because it's very self-contained, it'll be easy to invoke the increment function and assert that it returns what it's supposed to, so we'll write a Unit Test.
+Vì nó tự chứa, việc gọi hàm increment và assert kết quả rất dễ, nên ta sẽ viết Unit Test.
 
-If any of these assertions fail, it's clear that the issue is contained within the `increment` function.
+Nếu assertion nào thất bại, rõ ràng vấn đề nằm trong hàm `increment`.
 
 ```js{3-15} [helpers.spec.js]
 import { increment } from './helpers'
@@ -92,11 +92,11 @@ describe('increment', () => {
 })
 ```
 
-As mentioned previously, unit testing is typically applied to self-contained business logic, components, classes, modules, or functions that do not involve UI rendering, network requests, or other environmental concerns.
+Như đã đề cập, unit test thường áp dụng cho logic nghiệp vụ tự chứa, component, lớp, module, hoặc hàm không liên quan render UI, request mạng, hay mối quan tâm môi trường khác.
 
-These are typically plain JavaScript / TypeScript modules unrelated to Vue. In general, writing unit tests for business logic in Vue applications does not differ significantly from applications using other frameworks.
+Đây thường là module JavaScript/TypeScript thuần không liên quan Vue. Nhìn chung, viết unit test cho logic nghiệp vụ trong ứng dụng Vue không khác đáng kể so với framework khác.
 
-There are two instances where you DO unit test Vue-specific features:
+Có hai trường hợp bạn CÓ kiểm thử đơn vị các tính năng đặc thù của Vue:
 
 1. Composables
 2. Components

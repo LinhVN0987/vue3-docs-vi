@@ -21,11 +21,11 @@ const vHighlight = {
 
 ## Introduction {#introduction}
 
-In addition to the default set of directives shipped in core (like `v-model` or `v-show`), Vue also allows you to register your own custom directives.
+Bên cạnh bộ directive mặc định trong core (như `v-model`, `v-show`), Vue cũng cho phép bạn đăng ký custom directive của riêng mình.
 
-We have introduced two forms of code reuse in Vue: [components](/guide/essentials/component-basics) and [composables](./composables). Components are the main building blocks, while composables are focused on reusing stateful logic. Custom directives, on the other hand, are mainly intended for reusing logic that involves low-level DOM access on plain elements.
+Ta đã giới thiệu hai cách tái sử dụng code trong Vue: [components](/guide/essentials/component-basics) và [composables](./composables). Component là khối xây dựng chính, còn composable tập trung tái sử dụng stateful logic. Custom directive, ngược lại, chủ yếu nhằm tái sử dụng logic liên quan truy cập DOM cấp thấp trên phần tử thuần.
 
-A custom directive is defined as an object containing lifecycle hooks similar to those of a component. The hooks receive the element the directive is bound to. Here is an example of a directive that adds a class to an element when it is inserted into the DOM by Vue:
+Custom directive được định nghĩa như một object chứa lifecycle hook tương tự component. Các hook nhận phần tử mà directive gắn vào. Ví dụ một directive thêm class vào phần tử khi được Vue chèn vào DOM:
 
 <div class="composition-api">
 
@@ -73,7 +73,7 @@ export default {
 
 <div class="composition-api">
 
-In `<script setup>`, any camelCase variable that starts with the `v` prefix can be used as a custom directive. In the example above, `vHighlight` can be used in the template as `v-highlight`.
+Trong `<script setup>`, bất kỳ biến camelCase bắt đầu với tiền tố `v` đều có thể dùng làm custom directive. Trong ví dụ trên, `vHighlight` có thể dùng trong template là `v-highlight`.
 
 If you are not using `<script setup>`, custom directives can be registered using the `directives` option:
 
@@ -95,11 +95,11 @@ export default {
 
 <div class="options-api">
 
-Similar to components, custom directives must be registered so that they can be used in templates. In the example above, we are using local registration via the `directives` option.
+Tương tự component, custom directive phải được đăng ký để dùng trong template. Ví dụ trên dùng đăng ký cục bộ qua tùy chọn `directives`.
 
 </div>
 
-It is also common to globally register custom directives at the app level:
+Cũng thường đăng ký custom directive ở phạm vi toàn app:
 
 ```js
 const app = createApp({})
@@ -110,15 +110,15 @@ app.directive('highlight', {
 })
 ```
 
-It is possible to type global custom directives by extending the `ComponentCustomProperties` interface from `vue`
+Có thể khai báo kiểu cho custom directive toàn cục bằng cách mở rộng interface `ComponentCustomProperties` từ `vue`.
 
-More Details: [Typing Custom Global Directives](/guide/typescript/composition-api#typing-global-custom-directives) <sup class="vt-badge ts" />
+Chi tiết: [Typing Custom Global Directives](/guide/typescript/composition-api#typing-global-custom-directives) <sup class="vt-badge ts" />
 
 ## When to use custom directives {#when-to-use}
 
-Custom directives should only be used when the desired functionality can only be achieved via direct DOM manipulation.
+Chỉ nên dùng custom directive khi chức năng mong muốn chỉ có thể đạt được bằng thao tác trực tiếp DOM.
 
-A common example of this is a `v-focus` custom directive that brings an element into focus.
+Ví dụ phổ biến là custom directive `v-focus` đưa phần tử vào focus.
 
 <div class="composition-api">
 
