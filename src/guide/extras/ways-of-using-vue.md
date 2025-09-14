@@ -41,9 +41,9 @@ Server‑side rendering có thể thực hiện trước nếu dữ liệu là t
 
 Có hai dạng SSG: single‑page và multi‑page. Cả hai đều pre‑render thành HTML tĩnh, khác biệt là:
 
-- After the initial page load, a single-page SSG "hydrates" the page into an SPA. This requires more upfront JS payload and hydration cost, but subsequent navigations will be faster, since it only needs to partially update the page content instead of reloading the entire page.
+- Sau lần tải trang đầu tiên, SSG dạng single‑page sẽ “hydrate” trang để trở thành một SPA. Cách này cần tải trước nhiều JS hơn và tốn chi phí hydrate, nhưng các lần điều hướng sau sẽ nhanh hơn vì chỉ cần cập nhật một phần nội dung trang thay vì tải lại toàn bộ.
 
-- A multi-page SSG loads a new page on every navigation. The upside is that it can ship minimal JS - or no JS at all if the page requires no interaction! Some multi-page SSG frameworks such as [Astro](https://astro.build/) also support "partial hydration" - which allows you to use Vue components to create interactive "islands" inside static HTML.
+- Multi-page SSG sẽ tải một trang mới ở mỗi lần điều hướng. Điểm hay là có thể gần như không cần JS — thậm chí không cần JS nếu trang không có tương tác! Một số framework SSG multi-page như [Astro](https://astro.build/) còn hỗ trợ "partial hydration" — cho phép dùng component Vue tạo các “đảo” tương tác bên trong HTML tĩnh.
 
 Single‑page SSG phù hợp nếu bạn cần tương tác đáng kể, phiên làm việc dài, hoặc phần tử/state được giữ qua lần điều hướng. Ngược lại, multi‑page SSG sẽ phù hợp hơn.
 

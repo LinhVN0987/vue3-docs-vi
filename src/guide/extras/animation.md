@@ -141,13 +141,13 @@ export default {
 
 <Colors />
 
-In addition to color, you can also use style bindings to animate transform, width, or height. You can even animate SVG paths using spring physics - after all, they are all attribute data bindings:
+Ngoài màu sắc, bạn cũng có thể dùng ràng buộc style để animate transform, width hoặc height. Bạn thậm chí có thể animate đường cong SVG bằng spring physics — suy cho cùng, tất cả đều là ràng buộc thuộc tính:
 
 <ElasticHeader />
 
 ## Animating with Watchers {#animating-with-watchers}
 
-With some creativity, we can use watchers to animate anything based on some numerical state. For example, we can animate the number itself:
+Với một chút sáng tạo, ta có thể dùng watcher để animate hầu như mọi thứ dựa trên một state số. Ví dụ, ta có thể animate chính con số đó:
 
 <div class="composition-api">
 

@@ -38,7 +38,7 @@ Lợi ích chính của virtual DOM là cho phép lập trình viên tạo, ki�
 
 Ở mức cao, khi một component Vue được mount sẽ diễn ra:
 
-1. **Compile**: Vue templates are compiled into **render functions**: functions that return virtual DOM trees. This step can be done either ahead-of-time via a build step, or on-the-fly by using the runtime compiler.
+1. **Compile**: Template của Vue được biên dịch thành **render function** (hàm trả về cây virtual DOM). Bước này có thể thực hiện trước (AOT) qua build step, hoặc thực hiện động bằng runtime compiler.
 
 2. **Mount**: Renderer gọi render function, duyệt cây virtual DOM trả về và tạo DOM node thật. Bước này là một [reactive effect](./reactivity-in-depth), nên theo dõi các phụ thuộc reactive đã dùng.
 
@@ -84,7 +84,7 @@ Thường có những phần trong template không chứa binding động:
 
 Hai div `foo` và `bar` là static — tạo lại vnode và diff ở mỗi lần render lại là không cần thiết. Renderer tạo các vnode này ở lần render đầu, cache lại và tái sử dụng ở các lần sau, đồng thời bỏ qua diff khi phát hiện vnode cũ và mới là cùng một tham chiếu.
 
-In addition, when there are enough consecutive static elements, they will be condensed into a single "static vnode" that contains the plain HTML string for all these nodes ([Example](https://template-explorer.vuejs.org/#eyJzcmMiOiI8ZGl2PlxuICA8ZGl2IGNsYXNzPVwiZm9vXCI+Zm9vPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJmb29cIj5mb288L2Rpdj5cbiAgPGRpdiBjbGFzcz1cImZvb1wiPmZvbzwvZGl2PlxuICA8ZGl2IGNsYXNzPVwiZm9vXCI+Zm9vPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJmb29cIj5mb288L2Rpdj5cbiAgPGRpdj57eyBkeW5hbWljIH19PC9kaXY+XG48L2Rpdj4iLCJzc3IiOmZhbHNlLCJvcHRpb25zIjp7ImhvaXN0U3RhdGljIjp0cnVlfX0=)). These static vnodes are mounted by directly setting `innerHTML`.
+Ngoài ra, khi có đủ nhiều phần tử tĩnh liên tiếp, chúng sẽ được cô đọng thành một "static vnode" chứa chuỗi HTML thuần cho tất cả các node đó ([Ví dụ](https://template-explorer.vuejs.org/#eyJzcmMiOiI8ZGl2PlxuICA8ZGl2IGNsYXNzPVwiZm9vXCI+Zm9vPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJmb29cIj5mb288L2Rpdj5cbiAgPGRpdiBjbGFzcz1cImZvb1wiPmZvbzwvZGl2PlxuICA8ZGl2IGNsYXNzPVwiZm9vXCI+Zm9vPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJmb29cIj5mb288L2Rpdj5cbiAgPGRpdj57eyBkeW5hbWljIH19PC9kaXY+XG48L2Rpdj4iLCJzc3IiOmZhbHNlLCJvcHRpb25zIjp7ImhvaXN0U3RhdGljIjp0cnVlfX0=)). Các static vnode này được mount bằng cách set trực tiếp `innerHTML`.
 
 ### Patch Flags {#patch-flags}
 
@@ -121,7 +121,7 @@ if (vnode.patchFlag & PatchFlags.CLASS /* 2 */) {
 
 Kiểm tra bitwise cực nhanh. Nhờ patch flag, Vue chỉ thực hiện lượng công việc tối thiểu cần thiết khi cập nhật phần tử có binding động.
 
-Vue also encodes the type of children a vnode has. For example, a template that has multiple root nodes is represented as a fragment. In most cases, we know for sure that the order of these root nodes will never change, so this information can also be provided to the runtime as a patch flag:
+Vue cũng mã hóa kiểu children mà một vnode có. Ví dụ, template có nhiều root node sẽ được biểu diễn dưới dạng fragment. Trong đa số trường hợp, thứ tự các root node này sẽ không đổi, nên thông tin đó cũng được truyền cho runtime như một patch flag:
 
 ```js{4}
 export function render() {

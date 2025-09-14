@@ -12,7 +12,7 @@ Vue [đạt 100% trong bài kiểm tra Custom Elements Everywhere](https://custo
 
 Mặc định, Vue sẽ cố resolve thẻ không phải HTML gốc thành component Vue đã đăng ký trước khi render nó như custom element. Điều này gây cảnh báo “failed to resolve component” trong quá trình phát triển. Để Vue coi một số thẻ là custom element và bỏ qua resolve, chỉ định [`compilerOptions.isCustomElement`](/api/application#app-config-compileroptions).
 
-If you are using Vue with a build setup, the option should be passed via build configs since it is a compile-time option.
+Nếu bạn dùng Vue với build setup, tuỳ chọn này nên được cấu hình qua công cụ build vì đây là tuỳ chọn ở compile-time.
 
 #### Example In-Browser Config {#example-in-browser-config}
 
@@ -139,13 +139,13 @@ document.body.appendChild(
   }
   ```
 
-  And the custom element usage:
+  Và khi dùng custom element:
 
   ```vue-html
   <my-element selected index="1"></my-element>
   ```
 
-  In the component, `selected` will be cast to `true` (boolean) and `index` will be cast to `1` (number).
+  Trong component, `selected` sẽ được ép kiểu thành `true` (boolean) và `index` sẽ được ép thành `1` (number).
 
 #### Events {#events}
 
@@ -157,7 +157,7 @@ Trong component, slot render bằng phần tử `<slot/>` như thường. Tuy nh
 
 - [Scoped slots](/guide/components/slots#scoped-slots) are not supported.
 
-- When passing named slots, use the `slot` attribute instead of the `v-slot` directive:
+- Khi truyền named slot, dùng attribute `slot` thay vì directive `v-slot`:
 
   ```vue-html
   <my-element>
@@ -171,7 +171,7 @@ Trong component, slot render bằng phần tử `<slot/>` như thường. Tuy nh
 
 #### App Level Config <sup class="vt-badge" data-text="3.5+" /> {#app-level-config}
 
-You can configure the app instance of a Vue custom element using the `configureApp` option:
+Bạn có thể cấu hình app instance của custom element Vue thông qua tuỳ chọn `configureApp`:
 
 ```js
 defineCustomElement(MyComponent, {
@@ -189,7 +189,7 @@ defineCustomElement(MyComponent, {
 
 Tooling SFC chính thức hỗ trợ import SFC ở “custom element mode” (cần `@vitejs/plugin-vue@^1.4.0` hoặc `vue-loader@^16.5.0`). SFC ở chế độ này sẽ inline các thẻ `<style>` thành chuỗi CSS và lộ ra dưới tùy chọn `styles` của component. `defineCustomElement` sẽ lấy và inject vào shadow root khi khởi tạo.
 
-To opt-in to this mode, simply end your component file name with `.ce.vue`:
+Để bật chế độ này, chỉ cần đặt tên file component kết thúc bằng `.ce.vue`:
 
 ```js
 import { defineCustomElement } from 'vue'
@@ -204,7 +204,7 @@ const ExampleElement = defineCustomElement(Example)
 customElements.define('my-example', ExampleElement)
 ```
 
-If you wish to customize what files should be imported in custom element mode (for example, treating _all_ SFCs as custom elements), you can pass the `customElement` option to the respective build plugins:
+Nếu muốn tuỳ biến file nào sẽ được import ở chế độ custom element (ví dụ, coi _mọi_ SFC là custom element), bạn có thể truyền tuỳ chọn `customElement` cho plugin build tương ứng:
 
 - [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#using-vue-sfcs-as-custom-elements)
 - [vue-loader](https://github.com/vuejs/vue-loader/tree/next#v16-only-options)
@@ -235,7 +235,7 @@ export function register() {
 }
 ```
 
-A consumer can use the elements in a Vue file:
+Người dùng có thể dùng các phần tử này trong file Vue:
 
 ```vue
 <script setup>
@@ -250,7 +250,7 @@ register()
 </template>
 ```
 
-Or in any other framework such as one with JSX, and with custom names:
+Hoặc trong framework khác như môi trường JSX, và với tên tuỳ chọn:
 
 ```jsx
 import { MyFoo, MyBar } from 'path/to/elements.js'
@@ -273,7 +273,7 @@ Khi viết template SFC, bạn có thể muốn [kiểm tra kiểu](/guide/scali
 
 Custom element được đăng ký toàn cục trong trình duyệt bằng API sẵn có, và mặc định không có suy luận kiểu khi dùng trong template Vue. Để hỗ trợ kiểu, ta có thể đăng ký kiểu component toàn cục bằng cách mở rộng [`GlobalComponents`](https://github.com/vuejs/language-tools/wiki/Global-Component-Types) để kiểm tra kiểu trong template (người dùng JSX có thể mở rộng [JSX.IntrinsicElements](https://www.typescriptlang.org/docs/handbook/jsx.html#intrinsic-elements)).
 
-Here is how to define the type for a custom element made with Vue:
+Đây là cách định nghĩa kiểu cho một custom element được tạo bằng Vue:
 
 ```typescript
 import { defineCustomElement } from 'vue'
@@ -382,11 +382,11 @@ type VueEmit<T extends EventMap> = EmitFn<{
 }>
 ```
 
-:::tip Note
-We marked `$props` and `$emit` as deprecated so that when we get a `ref` to a custom element we will not be tempted to use these properties, as these properties are for type checking purposes only when it comes to custom elements. These properties do not actually exist on the custom element instances.
+:::tip Lưu ý
+Chúng tôi đánh dấu `$props` và `$emit` là deprecated để khi bạn lấy `ref` tới custom element sẽ không dùng nhầm các thuộc tính này — chúng chỉ phục vụ mục đích kiểm tra kiểu trong template. Các thuộc tính này không tồn tại trên instance custom element.
 :::
 
-Using the type helper we can now select the JS properties that should be exposed for type checking in Vue templates:
+Dùng type helper này, giờ ta có thể chọn những thuộc tính JS sẽ được expose để kiểm tra kiểu trong template Vue:
 
 ```ts [some-lib/src/SomeElement.vue.ts]
 import {
@@ -409,7 +409,7 @@ declare module 'vue' {
 }
 ```
 
-Suppose that `some-lib` builds its source TypeScript files into a `dist/` folder. A user of `some-lib` can then import `SomeElement` and use it in a Vue SFC like so:
+Giả sử `some-lib` build mã nguồn TypeScript vào thư mục `dist/`. Người dùng `some-lib` có thể import `SomeElement` và dùng trong SFC như sau:
 
 ```vue [SomeElementImpl.vue]
 <script setup lang="ts">
@@ -455,7 +455,7 @@ onMounted(() => {
 </template>
 ```
 
-If an element does not have type definitions, the types of the properties and events can be defined in a more manual fashion:
+Nếu một phần tử không có định nghĩa kiểu sẵn, bạn có thể định nghĩa thủ công kiểu props và events như sau:
 
 ```vue [SomeElementImpl.vue]
 <script setup lang="ts">
@@ -490,7 +490,7 @@ declare module 'vue' {
 </template>
 ```
 
-Custom Element authors should not automatically export framework-specific custom element type definitions from their libraries, for example they should not export them from an `index.ts` file that also exports the rest of the library, otherwise users will have unexpected module augmentation errors. Users should import the framework-specific type definition file that they need.
+Tác giả Custom Element không nên tự động export định nghĩa kiểu đặc thù framework từ thư viện của mình (ví dụ không export từ `index.ts` nơi export các phần còn lại), nếu không người dùng có thể gặp lỗi module augmentation ngoài ý muốn. Người dùng nên import file định nghĩa kiểu dành riêng cho framework mà họ cần.
 
 ## Web Components vs. Vue Components {#web-components-vs-vue-components}
 
